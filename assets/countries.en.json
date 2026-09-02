@@ -54,6 +54,14 @@
       "value": "",
       "icon": ""
     }, {
+      "label": "Ukraine",
+      "value": "",
+      "icon": "🇺🇦"
+    }, {
+      "label": "United Arab Emirates",
+      "value": "",
+      "icon": "🇦🇪"
+    }, {
       "label": "United Kingdom",
       "value": "",
       "icon": "🇬🇧"
@@ -71,8 +79,16 @@
       "icon": "🇺🇿"
     }, {
       "label": "Vanatu",
-      "value": "",
+      "value": "🇻🇺",
       "icon": ""
+    }, {
+      "label": "Vatican City",
+      "value": "Vatican City State",
+      "icon": "🇻🇦"
+    }, {
+      "label": "Venezuela",
+      "value": "",
+      "icon": "🇻🇪"
     }, {
       "label": "Vietnam",
       "value": "",

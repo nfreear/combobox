@@ -26,18 +26,26 @@ input {
     min-width: 1.6rem;
 
     &[ command *= toggle ] {
-      transition: all 250ms;
+      &:after {
+        content: '▼';
+        display: inline-block;
+        transition: all 300ms;
+      }
 
       &[ aria-expanded = 'true' ] {
-        transform: rotate(180deg);
+        &:after {
+          transform: rotate(180deg);
+        }
       }
     }
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  &[ command *= toggle ] {
-    transition: none;
+  [ command *= toggle ] {
+    &:after {
+      transition: none;
+    }
   }
 }
 

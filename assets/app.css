@@ -1,6 +1,7 @@
 body {
   background-color: #222;
-  color: #fafafa;
+  color: #f8f8f8;
+  font-family: -apple-system, system-ui, sans-serif;
   margin: auto;
   max-width: 32rem;
   padding: 0 1rem;
@@ -17,5 +18,5 @@ my-combobox {
 
 * {
   outline-offset: .2rem;
-  text-underline-offset: .2rem;
+  text-underline-offset: .25rem;
 }

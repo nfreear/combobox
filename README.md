@@ -1,12 +1,12 @@
 
-# <my-combobox>
+# `<my-combobox>`
 
 A custom element for an editable combobox, with list autocomplete.
 
 APIs and techniques used:
 
 * [Editable combobox pattern - ARIA Authoring Practices Guide (APG)][apg],
-* [Accessible Rich Internet Applications][aria],
+* [Accessible Rich Internet Applications (WAI-ARIA)][aria],
 * [Popover API][pop],
 * [Invoker Commands API][cmd]
 * [Declarative Shadow DOM][dec]

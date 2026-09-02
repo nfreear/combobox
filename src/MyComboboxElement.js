@@ -1,5 +1,9 @@
 const { fetch, HTMLElement } = globalThis;
 
+/**
+ *
+ * @TODO fix `aria-activedescendant` and listbox navigation.
+ */
 export default class MyComboboxElement extends HTMLElement {
   #resp;
   #optionData;
@@ -91,7 +95,7 @@ export default class MyComboboxElement extends HTMLElement {
    */
 
   #onKeyUp (event) {
-    if (event.key === 'ArrowDown') { this.#togglePopover(true); }
+    if (/Arrow(Up|Down)/.test(event.key)) { this.#togglePopover(true); }
   }
 
   #onInput (event) {
@@ -129,7 +133,7 @@ export default class MyComboboxElement extends HTMLElement {
     switch (command) {
       case '--set-value':
         this.#input.value = value;
-        this.#input.setAttribute('aria-activedescendant', source.id);
+        // this.#input.setAttribute('aria-activedescendant', source.id);
         this.#resetSelected();
         source.setAttribute('aria-selected', true);
         this.#togglePopover(false);

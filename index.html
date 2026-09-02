@@ -21,7 +21,7 @@
         <label for="inp"><slot></slot></label>
         <input id="inp" role="combobox" aria-describeby="stat" aria-controls="list" aria-haspopup="listbox" aria-autocomplete="list" aria-expanded="false" pattern="[a-zA-Z ]+" maxlength="30">
         <button commandfor="inp" command="--clear" aria-label="Clear">×</button>
-        <button commandfor="pop" command="toggle-popover" aria-label="Toggle options">▼</button>
+        <button commandfor="pop" command="toggle-popover" aria-label="Toggle options" tabindex="-1"></button>
       </div>
       <div id="pop" popover>
         <output id="stat"><!-- Live region, initially empty --></output>
