@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<link rel="stylesheet" href="assets/app.css">
+
+<title>my-combobox</title>
+
+<header>
+  <h1>my-combobox</h1>
+</header>
+<main>
+  <p>A custom element for an editable combobox, with list autocomplete.</p>
+
+
+  <my-combobox autocomplete src="assets/countries.en.json">
+    Choose a country
+
+    <template shadowrootmode="open">
+      <link rel="stylesheet" href="assets/my-combobox.css">
+      <div class="row">
+        <label for="inp"><slot></slot></label>
+        <input id="inp" role="combobox" aria-describeby="stat" aria-controls="list" aria-haspopup="listbox" aria-autocomplete="list" aria-expanded="false" pattern="[a-zA-Z ]+" maxlength="30">
+        <button commandfor="inp" command="--clear" aria-label="Clear">×</button>
+        <button commandfor="pop" command="toggle-popover" aria-label="Toggle options">▼</button>
+      </div>
+      <div id="pop" popover>
+        <output id="stat"><!-- Live region, initially empty --></output>
+        <ul id="list" role="listbox" aria-label="Country options"><!-- Via JSON fetch. --></ul>
+      </div>
+    </template>
+  </my-combobox>
+
+
+</main>
+<footer>
+  <p>Source: <a href="https://github.com/nfreear/combobox">@nfreear/combobox</a></p>
+</footer>
+
+
+<script type="module">
+  import MyComboboxElement from './src/MyComboboxElement.js';
+
+  customElements.define('my-combobox', MyComboboxElement);
+</script>
+</html>

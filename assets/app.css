@@ -1,0 +1,21 @@
+body {
+  background-color: #222;
+  color: #fafafa;
+  margin: auto;
+  max-width: 32rem;
+  padding: 0 1rem;
+}
+
+a[href] {
+  color: #acf;
+}
+
+my-combobox {
+  display: block;
+  margin: 2rem 0;
+}
+
+* {
+  outline-offset: .2rem;
+  text-underline-offset: .2rem;
+}

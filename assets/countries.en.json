@@ -1,0 +1,94 @@
+{
+  "#": [
+    "An incomplete list of countries!",
+    "https://en.wikipedia.org/wiki/List_of_sovereign_states",
+    "https://duckduckgo.com/?q=albania+flag+emoji&ia=web"
+  ],
+  "options": [
+    {
+      "label": "Afghanistan",
+      "value": "Afghanistan",
+      "icon": "🇦🇫"
+    }, {
+      "label": "Albania",
+      "value": "Albania",
+      "icon": "🇦🇱"
+    }, {
+      "label": "Algeria",
+      "value": "",
+      "icon": "🇩🇿"
+    }, {
+      "label": "Andorra",
+      "value": "",
+      "icon": "🇦🇩"
+    }, {
+      "label": "Angola",
+      "value": "",
+      "icon": "🇦🇴"
+    }, {
+      "label": "Antigua & Barbuda",
+      "value": "Antigua and Barbuda",
+      "icon": "🇦🇬"
+    }, {
+      "label": "Argentina",
+      "value": "",
+      "icon": "🇦🇷"
+    }, {
+      "label": "Armenia",
+      "value": "",
+      "icon": "🇦🇲"
+    }, {
+      "label": "Australia",
+      "value": "",
+      "icon": "🇦🇺"
+    }, {
+      "label": "Austria",
+      "value": "",
+      "icon": "🇦🇹"
+    }, {
+      "label": "Azerbaijan",
+      "value": "",
+      "icon": "🇦🇿"
+    }, {
+      "label": "…",
+      "value": "",
+      "icon": ""
+    }, {
+      "label": "United Kingdom",
+      "value": "",
+      "icon": "🇬🇧"
+    }, {
+      "label": "United States",
+      "value": "United States of America",
+      "icon": "🇺🇸"
+    }, {
+      "label": "Uruguay",
+      "value": "",
+      "icon": "🇺🇾"
+    }, {
+      "label": "Uzbekistan",
+      "value": "",
+      "icon": "🇺🇿"
+    }, {
+      "label": "Vanatu",
+      "value": "",
+      "icon": ""
+    }, {
+      "label": "Vietnam",
+      "value": "",
+      "icon": "🇻🇳"
+    }, {
+      "label": "Yemen",
+      "value": "",
+      "icon": "🇾🇪"
+    }, {
+      "label": "Zambia",
+      "value": "",
+      "icon": "🇿🇲"
+    }, {
+      "label": "Zimbabwe",
+      "value": "",
+      "icon": "🇿🇼"
+    }
+  ]
+}

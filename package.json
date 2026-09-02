@@ -1,0 +1,13 @@
+{
+  "exports": {
+    ".": "src/MyComboboxElement.js",
+    "./style": "assets/my-combobox.css",
+    "./data": "assets/countries.en.json"
+  },
+  "devDependencies": {
+    "servor": "^4.0.2"
+  },
+  "scripts": {
+    "start": "npx servor"
+  }
+}
