@@ -3,7 +3,8 @@
 }
 
 input {
-  background-color: var(--my-cb-background, #fdfdfd);
+  background-color: var(--my-cb-background-color, #fdfdfd);
+  border-radius: .2rem;
   font-size: inherit;
   padding: .2rem .5rem;
 
@@ -50,7 +51,7 @@ input {
 }
 
 [ popover ] {
-  background-color: var(--my-cb-background, #fdfdfd);
+  background-color: var(--my-cb-background-color, #fdfdfd);
   border: 1px solid gray;
   border-radius: .3rem;
   min-width: 11rem;
@@ -71,6 +72,12 @@ ul {
       .twa {
         margin-right: .3rem;
       }
+
+      &.rovingFocus {
+        background-color: #222;
+        border-radius: .2rem;
+        color: #eee;
+      }
     }
 
     [ aria-selected = true ] {
@@ -78,7 +85,7 @@ ul {
 
       &::after {
         content: '✔️' / '';
-        font-size: larger;
+        font-size: var(--my-cb-icon-size, larger);
         margin-left: .3rem;
       }
     }
@@ -88,6 +95,14 @@ ul {
 :host([ use-emoji ]) {
   [ data-icon ]::before {
     content: attr(data-icon) / ''; /* Accessibility: empty ALT text. */
-    font-size: larger;
+    font-size: var(--my-cb-icon-size, larger);
+  }
+}
+
+:host([ load-icon-style ]) {
+  .twa {
+    height: var(--my-cb-icon-size, 1em);
+    width: var(--my-cb-icon-size, 1em);
+    background-size: contain;
   }
 }

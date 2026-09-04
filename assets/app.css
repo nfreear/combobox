@@ -1,3 +1,7 @@
+:root {
+  --my-cb-icon-size: 1.3em;
+}
+
 body {
   background-color: #222;
   color: #f8f8f8;
@@ -5,13 +9,19 @@ body {
   margin: auto;
   max-width: 32rem;
   padding: 0 1rem;
+
+  a[href] {
+    color: #acf;
+  }
 }
 
-a[href] {
-  color: #acf;
+footer {
+  border-top: 1px dashed gray;
+  margin-top: 4rem;
 }
 
-my-combobox {
+my-combobox,
+my-autocomplete-combobox {
   display: block;
   margin: 2rem 0;
 }

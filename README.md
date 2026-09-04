@@ -14,7 +14,7 @@ APIs and techniques used:
 
 ## Usage
 
-* CDN: [esm.sh/gh/nfreear/combobox][cdn]
+CDN: [esm.sh/gh/nfreear/combobox][cdn]
 
 ```js
 import MyComboboxElement from 'nfreear/combobox';
@@ -22,7 +22,7 @@ import MyComboboxElement from 'nfreear/combobox';
 customElements.define('my-combobox', MyComboboxElement);
 ```
 
-See [`index.html`][html] for a complete example:
+See [`index.html`][html] for a complete example, including shadow DOM:
 ```html
 <my-combobox src="path/to/options.json">
   Choose a country

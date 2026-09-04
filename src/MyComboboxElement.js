@@ -1,8 +1,10 @@
 const { fetch, HTMLElement } = globalThis;
 
 /**
+ * A custom element for an editable combobox, with list autocomplete.
  *
- * @TODO fix `aria-activedescendant` and listbox navigation.
+ * @customElement my-combobox
+ * @license MIT
  */
 export default class MyComboboxElement extends HTMLElement {
   #iconCssUrl = 'https://cdn.jsdelivr.net/gh/SebastianAigner/twemoji-amazing/twemoji-amazing.css';
@@ -10,6 +12,8 @@ export default class MyComboboxElement extends HTMLElement {
   #resp;
   #optionData;
   #optionElems = [];
+  #currentIndex;
+  #popoverOpen = false;
 
   get value () { return this.#input.value.trim(); }
 
@@ -20,11 +24,13 @@ export default class MyComboboxElement extends HTMLElement {
   get #noResult () { return this.getAttribute('noresult') ?? 'No results found'; }
   get #inputError () { return this.getAttribute('input-error') ?? 'Error. Unexpected input'; }
 
-  get #input () { return this.shadowRoot.querySelector('input[ role = combobox ]'); }
-  get #popover () { return this.shadowRoot.querySelector('[ popover ]'); }
-  get #listbox () { return this.shadowRoot.querySelector('ul[ role = listbox ]'); }
-  get #output () { return this.shadowRoot.querySelector('output'); }
-  get #button () { return this.shadowRoot.querySelector('button[ command *= toggle ]'); }
+  /* Accessibility: enforce ARIA roles and other attributes!
+  */
+  get #input () { return this.shadowRoot.querySelector('input[role = combobox]'); }
+  get #popover () { return this.shadowRoot.querySelector('[popover]'); }
+  get #listbox () { return this.shadowRoot.querySelector('ul[role = listbox]'); }
+  get #output () { return this.shadowRoot.querySelector('output, [aria-live]'); }
+  get #button () { return this.shadowRoot.querySelector('button[command *= toggle]'); }
 
   constructor () {
     super();
@@ -66,13 +72,14 @@ export default class MyComboboxElement extends HTMLElement {
       const { label, value } = entry;
       const listItem = document.createElement('li');
       const button = document.createElement('button');
-      const textNode = document.createTextNode(label || value);label || value; // ??
+      const textNode = document.createTextNode(label || value); // ??
       const iconElem = this.#createIconElement(entry);
       button.role = 'option';
       button.id = `OPT_${idx}`;
       button.value = value || label; // ??
       button.command = '--set-value';
       button.setAttribute('commandfor', this.#input.id);
+      button.setAttribute('tabindex', -1);
       button.appendChild(iconElem);
       button.appendChild(textNode);
       listItem.role = 'none';
@@ -113,6 +120,7 @@ export default class MyComboboxElement extends HTMLElement {
   }
 
   #togglePopover (force) { this.#popover.togglePopover({ force, source: this.#input }); }
+
   #updateStatus (message = '') { this.#output.value = message; }
 
   #find (option, query) {
@@ -121,12 +129,49 @@ export default class MyComboboxElement extends HTMLElement {
     return found ? 1 : 0;
   }
 
+  #setOptionByIndex (idx = 0) {
+    console.assert(typeof idx === 'number' && idx >= 0, 'Unexpected index');
+    const prevOption = this.#optionElems[this.#currentIndex];
+    const newOption = this.#optionElems[idx];
+    if (prevOption) {
+      prevOption.classList.remove('rovingFocus');
+    }
+    if (newOption) {
+      newOption.classList.add('rovingFocus');
+      this.#currentIndex = idx;
+      this.#input.setAttribute('aria-activedescendant', newOption.id);
+    }
+  }
+
+  #setOptionByOffset (offset) {
+    console.assert(typeof offset === 'number', 'Unexpected offset');
+    const prevOption = this.#optionElems[this.#currentIndex];
+    const newOption = this.#optionElems[this.#currentIndex + offset];
+    if (newOption) {
+      prevOption.classList.remove('rovingFocus');
+      newOption.classList.add('rovingFocus');
+      this.#currentIndex += offset;
+      this.#input.setAttribute('aria-activedescendant', newOption.id);
+      console.debug('offset:', offset);
+    }
+  }
+
   /*
    * Event handlers.
    */
 
   #onKeyUp (event) {
-    if (/Arrow(Up|Down)/.test(event.key)) { this.#togglePopover(true); }
+    const { key } = event;
+    if (/Arrow(Up|Down)/.test(key)) {
+      if (this.#popoverOpen) {
+        const offset = (key === 'ArrowUp') ? -1 : 1;
+        this.#setOptionByOffset(offset);
+      } else {
+        this.#setOptionByIndex(0);
+        this.#togglePopover(true);
+      }
+      console.debug('keyup:', key, [this], event);
+    }
   }
 
   #onInput (event) {
@@ -151,9 +196,12 @@ export default class MyComboboxElement extends HTMLElement {
   }
 
   #onToggle (event) {
-    const isOpen = event.newState === 'open';
+    const isOpen = this.#popoverOpen = event.newState === 'open';
     this.#input.setAttribute('aria-expanded', isOpen);
     this.#button.setAttribute('aria-expanded', isOpen); // Purely for CSS?!
+    if (isOpen) {
+      this.#input.focus();
+    }
     console.debug('toggle:', event.newState, event);
   }
 

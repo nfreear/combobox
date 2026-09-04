@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <link rel="stylesheet" href="assets/app.css">
 
 <title>my-combobox</title>
@@ -12,23 +14,23 @@
   <p>A custom element for an editable combobox, with list autocomplete.</p>
 
 
-  <my-combobox autocomplete load-icon-style src="assets/countries.en.json">
+  <my-autocomplete-combobox load-icon-style src="assets/countries.en.json">
     Choose a country
 
     <template shadowrootmode="open">
       <link rel="stylesheet" href="assets/my-combobox.css">
       <div class="row">
-        <label for="inp"><slot></slot></label>
-        <input id="inp" role="combobox" aria-describeby="stat" aria-controls="list" aria-haspopup="listbox" aria-autocomplete="list" aria-expanded="false" pattern="[a-zA-Z ]+" maxlength="30">
-        <button commandfor="inp" command="--clear" aria-label="Clear">×</button>
-        <button commandfor="pop" command="toggle-popover" aria-label="Toggle options" tabindex="-1"></button>
+        <label for="input"><slot></slot></label>
+        <input id="input" role="combobox" aria-describedby="status" aria-controls="list" aria-haspopup="listbox" aria-autocomplete="list" aria-expanded="false" pattern="[a-zA-Z ]+" maxlength="30">
+        <button commandfor="input" command="--clear" aria-label="Clear">×</button>
+        <button commandfor="popover" command="toggle-popover" aria-label="Toggle options" tabindex="-1"></button>
       </div>
-      <div id="pop" popover>
-        <output id="stat"><!-- Live region, initially empty --></output>
+      <div id="popover" popover>
+        <output id="status"><!-- Live region, initially empty --></output>
         <ul id="list" role="listbox" aria-label="Country options"><!-- Via JSON fetch. --></ul>
       </div>
     </template>
-  </my-combobox>
+  </my-autocomplete-combobox>
 
 
 </main>
@@ -40,6 +42,6 @@
 <script type="module">
   import MyComboboxElement from './src/MyComboboxElement.js';
 
-  customElements.define('my-combobox', MyComboboxElement);
+  customElements.define('my-autocomplete-combobox', MyComboboxElement);
 </script>
 </html>
