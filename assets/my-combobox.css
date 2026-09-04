@@ -67,22 +67,27 @@ ul {
       text-align: left;
       width: 100%;
       margin-bottom: .1rem;
-    }
 
-    [ data-icon ]::before {
-      content: attr(data-icon);
-      font-size: larger;
-      margin-right: .3rem;
+      .twa {
+        margin-right: .3rem;
+      }
     }
 
     [ aria-selected = true ] {
       background-color: #ccc;
 
       &::after {
-        content: '✔️';
+        content: '✔️' / '';
         font-size: larger;
         margin-left: .3rem;
       }
     }
+  }
+}
+
+:host([ use-emoji ]) {
+  [ data-icon ]::before {
+    content: attr(data-icon) / ''; /* Accessibility: empty ALT text. */
+    font-size: larger;
   }
 }

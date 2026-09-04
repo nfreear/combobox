@@ -12,7 +12,30 @@ APIs and techniques used:
 * [Declarative Shadow DOM][dec]
 * [Autonomous custom elements][el]
 
----
+## Usage
+
+* CDN: [esm.sh/gh/nfreear/combobox][cdn]
+
+```js
+import MyComboboxElement from 'nfreear/combobox';
+
+customElements.define('my-combobox', MyComboboxElement);
+```
+
+See [`index.html`][html] for a complete example:
+```html
+<my-combobox src="path/to/options.json">
+  Choose a country
+  <mytemplate shadowrootmode="open">
+    ...
+  </my-template>
+</my-combobox>
+```
+
+## Acknowledgements
+
+Thanks to [@SebastianAigner][twemoji] and others for emoji flag support! (_Windows fix!_)
+
 ## License:
 
 * [MIT License][mit]
@@ -23,4 +46,8 @@ APIs and techniques used:
 [cmd]: https://developer.mozilla.org/en-US/docs/Web/API/Invoker_Commands_API
 [dec]: https://web.dev/articles/declarative-shadow-dom
 [el]: https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements
+[html]: https://github.com/nfreear/combobox/blob/main/index.html
+[cdn]: https://esm.sh/gh/nfreear/combobox
 [mit]: https://nfreear.mit-license.org/2026
+
+[twemoji]: https://github.com/SebastianAigner/twemoji-amazing

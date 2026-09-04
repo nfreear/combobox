@@ -28,7 +28,8 @@
     }, {
       "label": "Antigua & Barbuda",
       "value": "Antigua and Barbuda",
-      "icon": "🇦🇬"
+      "icon": "🇦🇬",
+      "iconId": "antigua-barbuda"
     }, {
       "label": "Argentina",
       "value": "",
@@ -51,7 +52,7 @@
       "icon": "🇦🇿"
     }, {
       "label": "…",
-      "value": "",
+      "value": "xxx",
       "icon": ""
     }, {
       "label": "Ukraine",
@@ -68,7 +69,8 @@
     }, {
       "label": "United States",
       "value": "United States of America",
-      "icon": "🇺🇸"
+      "icon": "🇺🇸",
+      "iconId": "united-states"
     }, {
       "label": "Uruguay",
       "value": "",
@@ -78,13 +80,14 @@
       "value": "",
       "icon": "🇺🇿"
     }, {
-      "label": "Vanatu",
-      "value": "🇻🇺",
-      "icon": ""
+      "label": "Vanuatu",
+      "value": "",
+      "icon": "🇻🇺"
     }, {
       "label": "Vatican City",
       "value": "Vatican City State",
-      "icon": "🇻🇦"
+      "icon": "🇻🇦",
+      "iconId": "vatican-city"
     }, {
       "label": "Venezuela",
       "value": "",

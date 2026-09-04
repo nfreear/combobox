@@ -5,13 +5,18 @@ const { fetch, HTMLElement } = globalThis;
  * @TODO fix `aria-activedescendant` and listbox navigation.
  */
 export default class MyComboboxElement extends HTMLElement {
+  #iconCssUrl = 'https://cdn.jsdelivr.net/gh/SebastianAigner/twemoji-amazing/twemoji-amazing.css';
+  #iconPrefix = 'twa twa-flag-';
   #resp;
   #optionData;
   #optionElems = [];
 
   get value () { return this.#input.value.trim(); }
 
+  /* Private getters.
+  */
   get #src () { return this.getAttribute('src'); }
+  get #loadIconStyle () { return this.hasAttribute('load-icon-style'); }
   get #noResult () { return this.getAttribute('noresult') ?? 'No results found'; }
   get #inputError () { return this.getAttribute('input-error') ?? 'Error. Unexpected input'; }
 
@@ -25,6 +30,9 @@ export default class MyComboboxElement extends HTMLElement {
     super();
     this.#expectations();
     this.#fetchCreateOptions();
+    if (this.#loadIconStyle) {
+      this.#appendIconStyleElement();
+    }
 
     this.#input.addEventListener('input', (ev) => this.#onInput(ev));
     this.#input.addEventListener('keyup', (ev) => this.#onKeyUp(ev));
@@ -54,22 +62,45 @@ export default class MyComboboxElement extends HTMLElement {
   }
 
   #createOptionElements () {
-    this.#optionData.forEach(({ label, value, icon }, idx) => {
+    this.#optionData.forEach((entry, idx) => {
+      const { label, value } = entry;
       const listItem = document.createElement('li');
       const button = document.createElement('button');
+      const textNode = document.createTextNode(label || value);label || value; // ??
+      const iconElem = this.#createIconElement(entry);
       button.role = 'option';
       button.id = `OPT_${idx}`;
-      button.textContent = label || value; // ??
       button.value = value || label; // ??
-      button.dataset.icon = icon;
       button.command = '--set-value';
       button.setAttribute('commandfor', this.#input.id);
+      button.appendChild(iconElem);
+      button.appendChild(textNode);
       listItem.role = 'none';
       listItem.appendChild(button);
       this.#listbox.appendChild(listItem);
       this.#optionElems.push(button);
     });
     this.dataset.total = this.#optionElems.length;
+  }
+
+  #createIconElement (entry) {
+    const { label, value, icon, iconId } = entry;
+    const iconElem = document.createElement('ico');
+    const theIconId = (iconId || value || label).replace(/ /g, '-').toLowerCase();
+    iconElem.className = `${this.#iconPrefix}${theIconId}`;
+    iconElem.dataset.icon = icon;
+    iconElem.setAttribute('part', 'icon');
+    iconElem.setAttribute('aria-hidden', 'true');
+    return iconElem;
+  }
+
+  #appendIconStyleElement () {
+    const styleElem = document.createElement('link');
+    styleElem.setAttribute('rel', 'stylesheet');
+    styleElem.href = this.#iconCssUrl;
+    this.shadowRoot.appendChild(styleElem);
+    console.debug('styleElem:', styleElem);
+    return styleElem;
   }
 
   #resetHidden () {

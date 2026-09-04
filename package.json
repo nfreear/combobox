@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "exports": {
     ".": "src/MyComboboxElement.js",
     "./style": "assets/my-combobox.css",
