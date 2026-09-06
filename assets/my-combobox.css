@@ -54,7 +54,9 @@ input {
   background-color: var(--my-cb-background-color, #fdfdfd);
   border: 1px solid gray;
   border-radius: .3rem;
+  max-height: 100vh;
   min-width: 11rem;
+  overflow-y: scroll;
   position-area: center bottom;
 }
 
@@ -93,8 +95,8 @@ ul {
 }
 
 :host([ use-emoji ]) {
-  [ data-icon ]::before {
-    content: attr(data-icon) / ''; /* Accessibility: empty ALT text. */
+  [ data-emoji ]::before {
+    content: attr(data-emoji) / ''; /* Accessibility: empty ALT text. */
     font-size: var(--my-cb-icon-size, larger);
   }
 }

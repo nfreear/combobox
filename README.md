@@ -32,6 +32,22 @@ See [`index.html`][html] for a complete example, including shadow DOM:
 </my-combobox>
 ```
 
+# JSON format
+
+```json
+{
+  "options": [
+    {
+      "name": "Afghanistan",  // Visual label
+      "value": "Afghanistan", // Optional
+      "code": "AF",           // Optional, country code based on ISO 3166-1 alpha-2
+      "emoji": "🇦🇫"
+    }
+    ...
+  ]
+}
+```
+
 ## Acknowledgements
 
 Thanks to [@SebastianAigner][twemoji] and others for emoji flag support! (_Windows fix!_)

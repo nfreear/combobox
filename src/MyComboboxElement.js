@@ -12,7 +12,8 @@ export default class MyComboboxElement extends HTMLElement {
   #resp;
   #optionData;
   #optionElems = [];
-  #currentIndex;
+  #visibleOpt = [];
+  #currentIndex = 0;
   #popoverOpen = false;
 
   get value () { return this.#input.value.trim(); }
@@ -28,7 +29,7 @@ export default class MyComboboxElement extends HTMLElement {
   */
   get #input () { return this.shadowRoot.querySelector('input[role = combobox]'); }
   get #popover () { return this.shadowRoot.querySelector('[popover]'); }
-  get #listbox () { return this.shadowRoot.querySelector('ul[role = listbox]'); }
+  get #listbox () { return this.#popover.querySelector('ul[role = listbox]'); }
   get #output () { return this.shadowRoot.querySelector('output, [aria-live]'); }
   get #button () { return this.shadowRoot.querySelector('button[command *= toggle]'); }
 
@@ -55,13 +56,19 @@ export default class MyComboboxElement extends HTMLElement {
     console.assert(this.#button, 'Missing toggle button');
   }
 
+  #reselectVisibleOptions () {
+    this.#visibleOpt = this.#listbox.querySelectorAll(':not([hidden]) [role = option]');
+  }
+
   async #fetchCreateOptions () {
+    console.assert(this.#src, 'Missing src');
     this.#resp = await fetch(this.#src);
     this.dataset.httpStatus = this.#resp.status;
     console.assert(this.#resp.ok, `Fetch error: ${this.#resp.status}`);
     const data = await this.#resp.json();
-    console.assert(Array.isArray(data.options) && data.options.length, 'Missing option data');
-    this.#optionData = data.options;
+    const options = Array.isArray(data) ? data : data.options;
+    console.assert(Array.isArray(options) && options.length, 'Missing option data');
+    this.#optionData = options;
 
     this.#createOptionElements();
     console.debug('my-combobox:', this.#optionElems.length, [this]);
@@ -69,14 +76,14 @@ export default class MyComboboxElement extends HTMLElement {
 
   #createOptionElements () {
     this.#optionData.forEach((entry, idx) => {
-      const { label, value } = entry;
+      const { name, value } = entry;
       const listItem = document.createElement('li');
       const button = document.createElement('button');
-      const textNode = document.createTextNode(label || value); // ??
+      const textNode = document.createTextNode(name || value); // ??
       const iconElem = this.#createIconElement(entry);
       button.role = 'option';
       button.id = `OPT_${idx}`;
-      button.value = value || label; // ??
+      button.value = value || name; // ??
       button.command = '--set-value';
       button.setAttribute('commandfor', this.#input.id);
       button.setAttribute('tabindex', -1);
@@ -87,15 +94,16 @@ export default class MyComboboxElement extends HTMLElement {
       this.#listbox.appendChild(listItem);
       this.#optionElems.push(button);
     });
+    this.#reselectVisibleOptions();
     this.dataset.total = this.#optionElems.length;
   }
 
   #createIconElement (entry) {
-    const { label, value, icon, iconId } = entry;
+    const { name, value, emoji, iconId } = entry;
     const iconElem = document.createElement('ico');
-    const theIconId = (iconId || value || label).replace(/ /g, '-').toLowerCase();
+    const theIconId = (iconId || value || name).replace(/ /g, '-').toLowerCase();
     iconElem.className = `${this.#iconPrefix}${theIconId}`;
-    iconElem.dataset.icon = icon;
+    iconElem.dataset.emoji = emoji;
     iconElem.setAttribute('part', 'icon');
     iconElem.setAttribute('aria-hidden', 'true');
     return iconElem;
@@ -119,41 +127,40 @@ export default class MyComboboxElement extends HTMLElement {
     this.#optionElems.forEach((el) => { el.removeAttribute('aria-selected'); });
   }
 
+  #resetRovingFocus () {
+    this.#optionElems.forEach((el) => { el.classList.remove('rovingFocus'); });
+  }
+
   #togglePopover (force) { this.#popover.togglePopover({ force, source: this.#input }); }
 
   #updateStatus (message = '') { this.#output.value = message; }
 
-  #find (option, query) {
+  #findAndHide (option, query) {
     const found = option.value.toLowerCase().includes(query.trim().toLowerCase());
     if (!found) { option.parentElement.setAttribute('hidden', ''); }
     return found ? 1 : 0;
   }
 
-  #setOptionByIndex (idx = 0) {
+  #setOptionByIndex (idx) {
     console.assert(typeof idx === 'number' && idx >= 0, 'Unexpected index');
-    const prevOption = this.#optionElems[this.#currentIndex];
-    const newOption = this.#optionElems[idx];
-    if (prevOption) {
-      prevOption.classList.remove('rovingFocus');
-    }
+    console.debug('setOption:', idx, this.#visibleOpt);
+    const newOption = this.#visibleOpt[idx];
+    console.assert(newOption, 'Missing new option');
     if (newOption) {
-      newOption.classList.add('rovingFocus');
       this.#currentIndex = idx;
+      this.#resetRovingFocus();
+      newOption.classList.add('rovingFocus');
       this.#input.setAttribute('aria-activedescendant', newOption.id);
     }
+    return newOption;
   }
 
   #setOptionByOffset (offset) {
     console.assert(typeof offset === 'number', 'Unexpected offset');
-    const prevOption = this.#optionElems[this.#currentIndex];
-    const newOption = this.#optionElems[this.#currentIndex + offset];
-    if (newOption) {
-      prevOption.classList.remove('rovingFocus');
-      newOption.classList.add('rovingFocus');
-      this.#currentIndex += offset;
-      this.#input.setAttribute('aria-activedescendant', newOption.id);
-      console.debug('offset:', offset);
-    }
+    // const prevOption = this.#visibleOpt[this.#currentIndex];
+    const newOption = this.#setOptionByIndex(this.#currentIndex + offset);
+
+    console.debug('offset:', offset, newOption);
   }
 
   /*
@@ -177,6 +184,8 @@ export default class MyComboboxElement extends HTMLElement {
   #onInput (event) {
     let count = 0;
 
+    this.#currentIndex = -1;
+
     if (!this.#input.checkValidity()) {
       return this.#setError(this.#inputError);
     }
@@ -184,7 +193,8 @@ export default class MyComboboxElement extends HTMLElement {
     if (this.value.length) {
       this.#togglePopover(true);
       this.#resetHidden();
-      this.#optionElems.forEach((el) => { count += this.#find(el, this.value); });
+      this.#optionElems.forEach((el) => { count += this.#findAndHide(el, this.value); });
+      this.#reselectVisibleOptions();
 
       this.dataset.count = count;
       this.#updateStatus(count <= 0 ? this.#noResult : ''); // `${count} results`);
@@ -232,6 +242,7 @@ export default class MyComboboxElement extends HTMLElement {
     this.removeAttribute('data-error');
     this.#resetHidden();
     this.#resetSelected();
+    this.#reselectVisibleOptions();
     this.#updateStatus();
   }
 

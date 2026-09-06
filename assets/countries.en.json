@@ -2,112 +2,144 @@
   "#": [
     "An incomplete list of countries!",
     "https://en.wikipedia.org/wiki/List_of_sovereign_states",
-    "https://duckduckgo.com/?q=albania+flag+emoji&ia=web"
+    "https://github.com/risan/country-flag-emoji-json"
   ],
   "options": [
     {
-      "label": "Afghanistan",
+      "name": "Afghanistan",
       "value": "Afghanistan",
-      "icon": "🇦🇫"
+      "code": "AF",
+      "emoji": "🇦🇫"
     }, {
-      "label": "Albania",
+      "name": "Albania",
       "value": "Albania",
-      "icon": "🇦🇱"
+      "code": "AL",
+      "emoji": "🇦🇱"
     }, {
-      "label": "Algeria",
+      "name": "Algeria",
       "value": "",
-      "icon": "🇩🇿"
+      "emoji": "🇩🇿"
     }, {
-      "label": "Andorra",
+      "name": "Andorra",
       "value": "",
-      "icon": "🇦🇩"
+      "code": "AD",
+      "emoji": "🇦🇩"
     }, {
-      "label": "Angola",
+      "name": "Angola",
       "value": "",
-      "icon": "🇦🇴"
+      "code": "AO",
+      "emoji": "🇦🇴"
     }, {
-      "label": "Antigua & Barbuda",
+      "name": "Antigua & Barbuda",
       "value": "Antigua and Barbuda",
-      "icon": "🇦🇬",
+      "code": "AG",
+      "emoji": "🇦🇬",
       "iconId": "antigua-barbuda"
     }, {
-      "label": "Argentina",
+      "name": "Argentina",
       "value": "",
-      "icon": "🇦🇷"
+      "code": "AR",
+      "emoji": "🇦🇷"
     }, {
-      "label": "Armenia",
+      "name": "Armenia",
       "value": "",
-      "icon": "🇦🇲"
+      "code": "",
+      "emoji": "🇦🇲"
     }, {
-      "label": "Australia",
+      "name": "Ascensin Island",
+      "code": "AC",
+      "emoji": "🇦🇨"
+    }, {
+      "name": "Australia",
       "value": "",
-      "icon": "🇦🇺"
+      "code": "AU",
+      "emoji": "🇦🇺"
     }, {
-      "label": "Austria",
+      "name": "Austria",
       "value": "",
-      "icon": "🇦🇹"
+      "code": "AT",
+      "emoji": "🇦🇹"
     }, {
-      "label": "Azerbaijan",
+      "name": "Azerbaijan",
       "value": "",
-      "icon": "🇦🇿"
+      "code": "AZ",
+      "emoji": "🇦🇿"
     }, {
-      "label": "…",
+      "name": "…",
       "value": "xxx",
-      "icon": ""
+      "emoji": ""
     }, {
-      "label": "Ukraine",
+      "name": "Uganda",
       "value": "",
-      "icon": "🇺🇦"
+      "code": "UG",
+      "emoji": "🇺🇬"
     }, {
-      "label": "United Arab Emirates",
+      "name": "Ukraine",
       "value": "",
-      "icon": "🇦🇪"
+      "code": "UA",
+      "emoji": "🇺🇦"
     }, {
-      "label": "United Kingdom",
+      "name": "United Arab Emirates",
       "value": "",
-      "icon": "🇬🇧"
+      "code": "AE",
+      "emoji": "🇦🇪"
     }, {
-      "label": "United States",
+      "name": "United Kingdom",
+      "value": "",
+      "code": "GB",
+      "emoji": "🇬🇧"
+    }, {
+      "name": "United States",
       "value": "United States of America",
-      "icon": "🇺🇸",
+      "emoji": "🇺🇸",
+      "code": "US",
       "iconId": "united-states"
     }, {
-      "label": "Uruguay",
+      "name": "Uruguay",
       "value": "",
-      "icon": "🇺🇾"
+      "code": "UY",
+      "emoji": "🇺🇾"
     }, {
-      "label": "Uzbekistan",
+      "name": "Uzbekistan",
       "value": "",
-      "icon": "🇺🇿"
+      "code": "UZ",
+      "emoji": "🇺🇿"
     }, {
-      "label": "Vanuatu",
+      "name": "Vanuatu",
       "value": "",
-      "icon": "🇻🇺"
+      "code": "VU",
+      "emoji": "🇻🇺"
     }, {
-      "label": "Vatican City",
+      "name": "Vatican City",
       "value": "Vatican City State",
-      "icon": "🇻🇦",
+      "code": "VA",
+      "emoji": "🇻🇦",
       "iconId": "vatican-city"
     }, {
-      "label": "Venezuela",
+      "name": "Venezuela",
       "value": "",
-      "icon": "🇻🇪"
+      "code": "VE",
+      "emoji": "🇻🇪"
     }, {
-      "label": "Vietnam",
+      "name": "Vietnam",
       "value": "",
-      "icon": "🇻🇳"
+      "code": "VN",
+      "emoji": "🇻🇳"
     }, {
-      "label": "Yemen",
+      "name": "Yemen",
       "value": "",
-      "icon": "🇾🇪"
+      "code": "YE",
+      "emoji": "🇾🇪"
     }, {
-      "label": "Zambia",
+      "name": "Zambia",
       "value": "",
-      "icon": "🇿🇲"
+      "code": "ZM",
+      "emoji": "🇿🇲"
     }, {
-      "label": "Zimbabwe",
+      "name": "Zimbabwe",
+      "code": "ZW",
       "value": "",
-      "icon": "🇿🇼"
+      "emoji": "🇿🇼"
     }
   ]
 }
