@@ -13,15 +13,17 @@
 <main>
   <p>A custom element for an editable combobox, with list autocomplete.</p>
 
+  <form>
 
-  <my-autocomplete-combobox load-icon-style src="assets/countries.en.json">
+  <my-autocomplete-combobox>
     Choose a country
 
     <template shadowrootmode="open">
       <link rel="stylesheet" href="assets/my-combobox.css">
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/SebastianAigner/twemoji-amazing/twemoji-amazing.css">
       <div class="row">
         <label for="input"><slot></slot></label>
-        <input id="input" role="combobox" aria-describedby="status" aria-controls="list" aria-haspopup="listbox" aria-autocomplete="list" aria-expanded="false" pattern="[a-zA-Z ]+" maxlength="30">
+        <input id="input" role="combobox" aria-describedby="status" aria-controls="list" aria-haspopup="listbox" aria-autocomplete="list" aria-expanded="false" pattern="[a-zA-Z ]+" maxlength="30" required>
         <button commandfor="input" command="--clear" aria-label="Clear">×</button>
         <button commandfor="popover" command="toggle-popover" aria-label="Toggle options" tabindex="-1"></button>
       </div>
@@ -32,6 +34,8 @@
     </template>
   </my-autocomplete-combobox>
 
+    <p><button>Submit</button></p>
+  <form>
 
 </main>
 <footer>
@@ -39,9 +43,5 @@
 </footer>
 
 
-<script type="module">
-  import MyComboboxElement from './src/MyComboboxElement.js';
-
-  customElements.define('my-autocomplete-combobox', MyComboboxElement);
-</script>
+<script type="module" src="assets/app.js?run=true"></script>
 </html>

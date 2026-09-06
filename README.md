@@ -16,10 +16,24 @@ APIs and techniques used:
 
 CDN: [esm.sh/gh/nfreear/combobox][cdn]
 
+JavaScript:
 ```js
 import MyComboboxElement from 'nfreear/combobox';
 
 customElements.define('my-combobox', MyComboboxElement);
+
+const element = document.querySelector('my-combobox');
+
+// Set an options array.
+element.options = [
+  {
+    "name": "Afghanistan",  // Visual label.
+    "value": "afghanistan", // Optional.
+    "code": "AF",           // Optional, country code based on ISO 3166-1 alpha-2
+    "emoji": "🇦🇫"           // Optional.
+  }
+  // ...
+];
 ```
 
 See [`index.html`][html] for a complete example, including shadow DOM:
@@ -30,22 +44,6 @@ See [`index.html`][html] for a complete example, including shadow DOM:
     ...
   </my-template>
 </my-combobox>
-```
-
-# JSON format
-
-```json
-{
-  "options": [
-    {
-      "name": "Afghanistan",  // Visual label
-      "value": "Afghanistan", // Optional
-      "code": "AF",           // Optional, country code based on ISO 3166-1 alpha-2
-      "emoji": "🇦🇫"
-    }
-    ...
-  ]
-}
 ```
 
 ## Acknowledgements

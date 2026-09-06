@@ -16,12 +16,20 @@ export default class MyComboboxElement extends HTMLElement {
   #currentIndex = 0;
   #popoverOpen = false;
 
+  /* Public setters/getters.
+  */
+  set options (optionsArray) {
+    console.assert(Array.isArray(optionsArray) && optionsArray.length, 'Invalid options array');
+    this.#optionData = optionsArray;
+    this.#createOptionElements();
+  }
+
+  get options () { return this.#optionData; }
   get value () { return this.#input.value.trim(); }
 
   /* Private getters.
   */
   get #src () { return this.getAttribute('src'); }
-  get #loadIconStyle () { return this.hasAttribute('load-icon-style'); }
   get #noResult () { return this.getAttribute('noresult') ?? 'No results found'; }
   get #inputError () { return this.getAttribute('input-error') ?? 'Error. Unexpected input'; }
 
@@ -36,9 +44,8 @@ export default class MyComboboxElement extends HTMLElement {
   constructor () {
     super();
     this.#expectations();
-    this.#fetchCreateOptions();
-    if (this.#loadIconStyle) {
-      this.#appendIconStyleElement();
+    if (this.#src) {
+      this.#fetchCreateOptions();
     }
 
     this.#input.addEventListener('input', (ev) => this.#onInput(ev));
@@ -50,8 +57,8 @@ export default class MyComboboxElement extends HTMLElement {
   #expectations () {
     console.assert(this.shadowRoot, 'Missing declarative shadow DOM');
     console.assert(this.#input, 'Missing input');
-    console.assert(this.#listbox, 'Missing listbox');
     console.assert(this.#popover, 'Missing popover');
+    console.assert(this.#listbox, 'Missing listbox');
     console.assert(this.#output, 'Missing output');
     console.assert(this.#button, 'Missing toggle button');
   }
@@ -60,6 +67,7 @@ export default class MyComboboxElement extends HTMLElement {
     this.#visibleOpt = this.#listbox.querySelectorAll(':not([hidden]) [role = option]');
   }
 
+  // Deprecated?!
   async #fetchCreateOptions () {
     console.assert(this.#src, 'Missing src');
     this.#resp = await fetch(this.#src);
@@ -71,7 +79,6 @@ export default class MyComboboxElement extends HTMLElement {
     this.#optionData = options;
 
     this.#createOptionElements();
-    console.debug('my-combobox:', this.#optionElems.length, [this]);
   }
 
   #createOptionElements () {
@@ -96,6 +103,7 @@ export default class MyComboboxElement extends HTMLElement {
     });
     this.#reselectVisibleOptions();
     this.dataset.total = this.#optionElems.length;
+    console.debug('my-combobox:', this.#optionElems.length, [this]);
   }
 
   #createIconElement (entry) {
@@ -107,15 +115,6 @@ export default class MyComboboxElement extends HTMLElement {
     iconElem.setAttribute('part', 'icon');
     iconElem.setAttribute('aria-hidden', 'true');
     return iconElem;
-  }
-
-  #appendIconStyleElement () {
-    const styleElem = document.createElement('link');
-    styleElem.setAttribute('rel', 'stylesheet');
-    styleElem.href = this.#iconCssUrl;
-    this.shadowRoot.appendChild(styleElem);
-    console.debug('styleElem:', styleElem);
-    return styleElem;
   }
 
   #resetHidden () {

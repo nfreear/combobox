@@ -2,13 +2,17 @@
   "type": "module",
   "exports": {
     ".": "src/MyComboboxElement.js",
+    "./app": "assets/app.js",
     "./style": "assets/my-combobox.css",
     "./data": "assets/countries.en.json"
   },
   "devDependencies": {
+    "eslint": "^9.39.5",
+    "neostandard": "^0.13.0",
     "servor": "^4.0.2"
   },
   "scripts": {
-    "start": "npx servor"
+    "start": "npx servor",
+    "lint": "npx eslint"
   }
 }
