@@ -15,7 +15,7 @@
 
   <form>
 
-  <my-autocomplete-combobox>
+  <my-autocomplete-combobox name="country" pattern="[a-zA-Z ]+" maxlength="30" autocomplete="off" required>
     Choose a country
 
     <template shadowrootmode="open">
@@ -23,7 +23,7 @@
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/SebastianAigner/twemoji-amazing/twemoji-amazing.css">
       <div class="row">
         <label for="input"><slot></slot></label>
-        <input id="input" role="combobox" aria-describedby="status" aria-controls="list" aria-haspopup="listbox" aria-autocomplete="list" aria-expanded="false" pattern="[a-zA-Z ]+" maxlength="30" required>
+        <input id="input" role="combobox" aria-describedby="status" aria-controls="list" aria-haspopup="listbox" aria-autocomplete="list" aria-expanded="false">
         <button commandfor="input" command="--clear" aria-label="Clear">×</button>
         <button commandfor="popover" command="toggle-popover" aria-label="Toggle options" tabindex="-1"></button>
       </div>

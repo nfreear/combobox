@@ -1,4 +1,4 @@
-const { fetch, HTMLElement } = globalThis;
+const { fetch, HTMLElement, CommandEvent } = globalThis;
 
 /**
  * A custom element for an editable combobox, with list autocomplete.
@@ -7,7 +7,9 @@ const { fetch, HTMLElement } = globalThis;
  * @license MIT
  */
 export default class MyComboboxElement extends HTMLElement {
-  #iconCssUrl = 'https://cdn.jsdelivr.net/gh/SebastianAigner/twemoji-amazing/twemoji-amazing.css';
+  static formAssociated = true;
+
+  #internals;
   #iconPrefix = 'twa twa-flag-';
   #resp;
   #optionData;
@@ -15,6 +17,7 @@ export default class MyComboboxElement extends HTMLElement {
   #visibleOpt = [];
   #currentIndex = 0;
   #popoverOpen = false;
+  #copyAttributes = ['autocomplete', 'maxlength', 'pattern', 'required']; // Not "minlength"!
 
   /* Public setters/getters.
   */
@@ -25,7 +28,14 @@ export default class MyComboboxElement extends HTMLElement {
   }
 
   get options () { return this.#optionData; }
-  get value () { return this.#input.value.trim(); }
+  get name () { return this.getAttribute('name'); }
+  get value () { return this.#input.value; }
+  get validity () { return this.#input.validity; }
+  get validationMessage () { return this.#input.validationMessage; }
+  get willValidate () { return this.#internals.willValidate; }
+  get form () { return this.#internals.form; }
+  get labels () { return this.#input.labels; }
+  get required () { return this.#input.required; }
 
   /* Private getters.
   */
@@ -43,6 +53,7 @@ export default class MyComboboxElement extends HTMLElement {
 
   constructor () {
     super();
+    this.#internals = this.attachInternals();
     this.#expectations();
     if (this.#src) {
       this.#fetchCreateOptions();
@@ -51,7 +62,25 @@ export default class MyComboboxElement extends HTMLElement {
     this.#input.addEventListener('input', (ev) => this.#onInput(ev));
     this.#input.addEventListener('keyup', (ev) => this.#onKeyUp(ev));
     this.#input.addEventListener('command', (ev) => this.#onCommand(ev));
+    this.#input.addEventListener('invalid', (ev) => console.debug('invalid:', ev)); // TODO: ??
     this.#popover.addEventListener('toggle', (ev) => this.#onToggle(ev));
+  }
+
+  formAssociatedCallback (form) {
+    console.debug('formAssocCB:', form, this.#internals);
+    this.#setValidity();
+    if (this.form) {
+      this.form.addEventListener('formdata', (ev) => console.debug('formdata:', ev)); // TODO: ??
+    }
+  }
+
+  connectedCallback () {
+    const copied = this.#copyAttributes.map((attr) => {
+      const value = this.getAttribute(attr);
+      if (value !== null) { this.#input.setAttribute(attr, value); }
+      return { attr, value };
+    });
+    console.debug('connectCB ~ copied:', copied);
   }
 
   #expectations () {
@@ -141,10 +170,8 @@ export default class MyComboboxElement extends HTMLElement {
   }
 
   #setOptionByIndex (idx) {
-    console.assert(typeof idx === 'number' && idx >= 0, 'Unexpected index');
-    console.debug('setOption:', idx, this.#visibleOpt);
+    console.assert(typeof idx === 'number' && idx >= 0, `Unexpected index: ${idx}`);
     const newOption = this.#visibleOpt[idx];
-    console.assert(newOption, 'Missing new option');
     if (newOption) {
       this.#currentIndex = idx;
       this.#resetRovingFocus();
@@ -156,10 +183,11 @@ export default class MyComboboxElement extends HTMLElement {
 
   #setOptionByOffset (offset) {
     console.assert(typeof offset === 'number', 'Unexpected offset');
-    // const prevOption = this.#visibleOpt[this.#currentIndex];
-    const newOption = this.#setOptionByIndex(this.#currentIndex + offset);
+    return this.#setOptionByIndex(this.#currentIndex + offset);
+  }
 
-    console.debug('offset:', offset, newOption);
+  #fireCommand (command, source) {
+    this.#input.dispatchEvent(new CommandEvent('command', { command, source }));
   }
 
   /*
@@ -170,17 +198,23 @@ export default class MyComboboxElement extends HTMLElement {
     const { key } = event;
     if (/Arrow(Up|Down)/.test(key)) {
       if (this.#popoverOpen) {
-        const offset = (key === 'ArrowUp') ? -1 : 1;
-        this.#setOptionByOffset(offset);
+        const opt = this.#setOptionByOffset(key === 'ArrowUp' ? -1 : 1);
+        if (!opt) {
+          this.#togglePopover(false);
+        }
       } else {
         this.#setOptionByIndex(0);
         this.#togglePopover(true);
       }
-      console.debug('keyup:', key, [this], event);
     }
+    if (key === 'Enter') {
+      this.#fireCommand('--set-value', this.#visibleOpt[this.#currentIndex]);
+    }
+    console.debug('keyup:', key, [this], event);
   }
 
   #onInput (event) {
+    const value = event.target.value.trim();
     let count = 0;
 
     this.#currentIndex = -1;
@@ -189,14 +223,18 @@ export default class MyComboboxElement extends HTMLElement {
       return this.#setError(this.#inputError);
     }
 
-    if (this.value.length) {
+    if (value && value.length) {
+      this.#internals.setFormValue(value);
       this.#togglePopover(true);
       this.#resetHidden();
-      this.#optionElems.forEach((el) => { count += this.#findAndHide(el, this.value); });
+      this.#optionElems.forEach((el) => { count += this.#findAndHide(el, value); });
       this.#reselectVisibleOptions();
 
       this.dataset.count = count;
       this.#updateStatus(count <= 0 ? this.#noResult : ''); // `${count} results`);
+      if (!count) {
+        this.#input.setCustomValidity(this.#noResult);
+      }
     } else {
       this.#clearInput();
     }
@@ -221,7 +259,8 @@ export default class MyComboboxElement extends HTMLElement {
     switch (command) {
       case '--set-value':
         this.#input.value = value;
-        // this.#input.setAttribute('aria-activedescendant', source.id);
+        this.#internals.setFormValue(value);
+        this.#setValidity({});
         this.#resetSelected();
         source.setAttribute('aria-selected', true);
         this.#togglePopover(false);
@@ -236,6 +275,7 @@ export default class MyComboboxElement extends HTMLElement {
   }
 
   #clearInput () {
+    this.#internals.setFormValue('');
     this.#input.value = '';
     this.#input.setAttribute('aria-activedescendant', '');
     this.removeAttribute('data-error');
@@ -243,13 +283,25 @@ export default class MyComboboxElement extends HTMLElement {
     this.#resetSelected();
     this.#reselectVisibleOptions();
     this.#updateStatus();
+    this.#input.setCustomValidity('');
+    this.#setValidity();
   }
 
   #setError (message) {
+    // this.#setValidity({ customError: true }, message);
     this.dataset.error = message;
-    this.#updateStatus(message);
+    this.#updateStatus(this.#input.validationMessage); // message);
     this.#listbox.setAttribute('hidden', '');
     this.#togglePopover(true);
     console.error(message);
+  }
+
+  #setValidity (flags, message) {
+    const validity = flags || this.#input.validity;
+    const vMessage = message || this.#input.validationMessage;
+    const anchor = this.#input;
+    const { customError } = validity;
+    console.debug('setValidity - c:', customError, vMessage, validity);
+    this.#internals.setValidity(validity, vMessage, anchor);
   }
 }

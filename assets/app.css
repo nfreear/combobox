@@ -20,6 +20,11 @@ footer {
   margin-top: 4rem;
 }
 
+button {
+  font-size: inherit;
+  padding: .2rem 1rem;
+}
+
 my-combobox,
 my-autocomplete-combobox {
   display: block;

@@ -1,7 +1,7 @@
 
 # `<my-combobox>`
 
-A custom element for an editable combobox, with list autocomplete.
+A [form-associated][form] custom element for an editable combobox, with list autocomplete.
 
 APIs and techniques used:
 
@@ -36,6 +36,16 @@ element.options = [
 ];
 ```
 
+Form submission test:
+```js
+const form = document.querySelector('form');
+
+form.addEventListener('submit', (event) => {
+  const { name, value} = element;
+  console.debug('Form submit:', name, value, event);
+});
+```
+
 See [`index.html`][html] for a complete example, including shadow DOM:
 ```html
 <my-combobox src="path/to/options.json">
@@ -48,7 +58,7 @@ See [`index.html`][html] for a complete example, including shadow DOM:
 
 ## Acknowledgements
 
-Thanks to [@SebastianAigner][twemoji] and others for emoji flag support! (_Windows fix!_)
+Thanks to [@SebastianAigner][twemoji], [@risan][] and others for emoji flag support! (_Windows fix!_)
 
 ## License:
 
@@ -60,8 +70,11 @@ Thanks to [@SebastianAigner][twemoji] and others for emoji flag support! (_Windo
 [cmd]: https://developer.mozilla.org/en-US/docs/Web/API/Invoker_Commands_API
 [dec]: https://web.dev/articles/declarative-shadow-dom
 [el]: https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements
+[form]: https://web.dev/articles/more-capable-form-controls
 [html]: https://github.com/nfreear/combobox/blob/main/index.html
 [cdn]: https://esm.sh/gh/nfreear/combobox
 [mit]: https://nfreear.mit-license.org/2026
 
 [twemoji]: https://github.com/SebastianAigner/twemoji-amazing
+[@risan]: https://github.com/risan/country-flag-emoji-json
+[@amio]: https://github.com/amio/emoji.json
