@@ -6,21 +6,25 @@ input {
   background-color: var(--my-cb-background-color, #fdfdfd);
   border-radius: .2rem;
   font-size: inherit;
+  min-width: var(--my-cb-input-width, 8rem);
   padding: .2rem .5rem;
+  text-align: left;
 
   &:invalid {
-    border-color: red;
+    border-color: var(--my-cb-invalid-color, red);
     border-radius: .2rem;
   }
 }
 
 :host([ data-error ]) {
   output {
-    color: darkred;
+    color: var(--my-cb-error-color, darkred);
   }
 }
 
 .row {
+  display: inline-block;
+
   button {
     font-size: inherit;
     min-height: 1.6rem;
@@ -28,7 +32,7 @@ input {
 
     &[ command *= toggle ] {
       &:after {
-        content: '▼';
+        content: var(--my-cb-toggle-char, '▼');
         display: inline-block;
         transition: all 300ms;
       }
@@ -37,6 +41,12 @@ input {
         &:after {
           transform: rotate(180deg);
         }
+      }
+    }
+
+    &[ command *= clear ] {
+      &:after {
+        content: var(--my-cb-clear-char, '×');
       }
     }
   }
@@ -54,7 +64,7 @@ input {
   background-color: var(--my-cb-background-color, #fdfdfd);
   border: 1px solid gray;
   border-radius: .3rem;
-  max-height: 100vh;
+  max-height: var(--my-cb-popover-max-height, 100vh);
   min-width: 11rem;
   overflow-y: scroll;
   position-area: center bottom;
@@ -76,17 +86,18 @@ ul {
       }
 
       &.rovingFocus {
-        background-color: #222;
+        background-color: var(--my-cb-roving-background, #222);
         border-radius: .2rem;
-        color: #eee;
+        color: var(--my-cb-roving-color, #eee);
       }
     }
 
     [ aria-selected = true ] {
-      background-color: #ccc;
+      background-color: var(--my-cb-selected-background, #ccc);
+      color: var(--my-cb-selected-color, inherit);
 
       &::after {
-        content: '✔️' / '';
+        content: var(--my-cb-selected-char, '✔️') / '';
         font-size: var(--my-cb-icon-size, larger);
         margin-left: .3rem;
       }

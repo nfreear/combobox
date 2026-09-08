@@ -1,9 +1,12 @@
+[![Deploy][ci-badge]][ci]
 
 # `<my-combobox>`
 
 A [form-associated][form] custom element for an editable combobox, with list autocomplete.
 
-APIs and techniques used:
+* [nfreear.github.io/combobox][ghp]
+
+Web APIs, standards & techniques used:
 
 * [Editable combobox pattern - ARIA Authoring Practices Guide (APG)][apg],
 * [Accessible Rich Internet Applications (WAI-ARIA)][aria],
@@ -22,10 +25,10 @@ import MyComboboxElement from 'nfreear/combobox';
 
 customElements.define('my-combobox', MyComboboxElement);
 
-const element = document.querySelector('my-combobox');
+const comboBox = document.querySelector('my-combobox');
 
 // Set an options array.
-element.options = [
+comboBox.options = [
   {
     "name": "Afghanistan",  // Visual label.
     "value": "afghanistan", // Optional.
@@ -41,20 +44,26 @@ Form submission test:
 const form = document.querySelector('form');
 
 form.addEventListener('submit', (event) => {
-  const { name, value} = element;
+  const { name, value, validity } = comboBox;
   console.debug('Form submit:', name, value, event);
 });
 ```
 
 See [`index.html`][html] for a complete example, including shadow DOM:
 ```html
-<my-combobox src="path/to/options.json">
-  Choose a country
+<label for="cty">Choose a country</label>
+
+<my-combobox id="cty" name="country">
   <mytemplate shadowrootmode="open">
     ...
   </my-template>
 </my-combobox>
 ```
+
+## `<label for>`
+Note that a `<label for>` element only works with the custom element because it is [form-associated][form], and has been coded to support it.
+
+In general, custom elements do __not__ support `<label for>`!
 
 ## Acknowledgements
 
@@ -63,6 +72,10 @@ Thanks to [@SebastianAigner][twemoji], [@risan][] and others for emoji flag supp
 ## License:
 
 * [MIT License][mit]
+
+[ci-badge]: https://github.com/nfreear/combobox/actions/workflows/deploy.yml/badge.svg
+[ci]: https://github.com/nfreear/combobox/actions/workflows/deploy.yml
+[ghp]: https://nfreear.github.io/combobox/
 
 [aria]: https://w3c.github.io/aria/#aria-autocomplete
 [apg]: https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-autocomplete-list/

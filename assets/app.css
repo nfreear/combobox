@@ -17,7 +17,7 @@ body {
 
 footer {
   border-top: 1px dashed gray;
-  margin-top: 4rem;
+  margin-top: 3rem;
 }
 
 button {
@@ -26,8 +26,9 @@ button {
 }
 
 my-combobox,
+my-select-combobox,
 my-autocomplete-combobox {
-  display: block;
+  display: inline-block;
   margin: 2rem 0;
 }
 

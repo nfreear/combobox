@@ -17,7 +17,8 @@ export default class MyComboboxElement extends HTMLElement {
   #visibleOpt = [];
   #currentIndex = 0;
   #popoverOpen = false;
-  #copyAttributes = ['autocomplete', 'maxlength', 'pattern', 'required']; // Not "minlength"!
+  // Form validation, etc.
+  #attrToCopy = ['autocomplete', 'maxlength', 'pattern', 'required']; // Not "minlength"!
 
   /* Public setters/getters.
   */
@@ -34,7 +35,7 @@ export default class MyComboboxElement extends HTMLElement {
   get validationMessage () { return this.#input.validationMessage; }
   get willValidate () { return this.#internals.willValidate; }
   get form () { return this.#internals.form; }
-  get labels () { return this.#input.labels; }
+  get labels () { return this.#internals.labels; } // Was: this.#input.labels;
   get required () { return this.#input.required; }
 
   /* Private getters.
@@ -49,7 +50,8 @@ export default class MyComboboxElement extends HTMLElement {
   get #popover () { return this.shadowRoot.querySelector('[popover]'); }
   get #listbox () { return this.#popover.querySelector('ul[role = listbox]'); }
   get #output () { return this.shadowRoot.querySelector('output, [aria-live]'); }
-  get #button () { return this.shadowRoot.querySelector('button[command *= toggle]'); }
+  get #toggleButton () { return this.shadowRoot.querySelector('button[command *= toggle]'); }
+  get #submitButton () { return this.form.querySelector('[type = submit]'); }
 
   constructor () {
     super();
@@ -67,20 +69,19 @@ export default class MyComboboxElement extends HTMLElement {
   }
 
   formAssociatedCallback (form) {
-    console.debug('formAssocCB:', form, this.#internals);
-    this.#setValidity();
+    console.assert(this.#submitButton, 'Missing form submit button');
+    const accName = this.#setAccessibleName();
+    const copied = this.#copyInputAttributes();
+    console.debug('formAssocCB:', accName, copied, form, this.#internals);
+    // Was: this.#setValidity();
     if (this.form) {
       this.form.addEventListener('formdata', (ev) => console.debug('formdata:', ev)); // TODO: ??
+      this.#submitButton.addEventListener('click', (ev) => this.#onBeforeSubmit(ev));
     }
   }
 
   connectedCallback () {
-    const copied = this.#copyAttributes.map((attr) => {
-      const value = this.getAttribute(attr);
-      if (value !== null) { this.#input.setAttribute(attr, value); }
-      return { attr, value };
-    });
-    console.debug('connectCB ~ copied:', copied);
+    console.debug('connectedCB');
   }
 
   #expectations () {
@@ -89,14 +90,34 @@ export default class MyComboboxElement extends HTMLElement {
     console.assert(this.#popover, 'Missing popover');
     console.assert(this.#listbox, 'Missing listbox');
     console.assert(this.#output, 'Missing output');
-    console.assert(this.#button, 'Missing toggle button');
+    console.assert(this.#toggleButton, 'Missing toggle button');
   }
 
   #reselectVisibleOptions () {
     this.#visibleOpt = this.#listbox.querySelectorAll(':not([hidden]) [role = option]');
   }
 
-  // Deprecated?!
+  /* Accessibility: find and use <label> content.
+  */
+  #setAccessibleName () {
+    console.assert(this.labels && this.labels.length, 'Missing label');
+    const labelElem = this.labels[0];
+    const accName = labelElem.textContent.trim();
+    this.#input.setAttribute('aria-label', accName);
+    labelElem.addEventListener('click', (ev) => { this.#input.focus(); });
+    return accName;
+  }
+
+  #copyInputAttributes () {
+    return this.#attrToCopy.map((attr) => {
+      const value = this.getAttribute(attr);
+      if (value !== null) { this.#input.setAttribute(attr, value); }
+      return { attr, value };
+    });
+  }
+
+  /* Deprecated?!
+  */
   async #fetchCreateOptions () {
     console.assert(this.#src, 'Missing src');
     this.#resp = await fetch(this.#src);
@@ -132,7 +153,7 @@ export default class MyComboboxElement extends HTMLElement {
     });
     this.#reselectVisibleOptions();
     this.dataset.total = this.#optionElems.length;
-    console.debug('my-combobox:', this.#optionElems.length, [this]);
+    console.debug('my-combobox:', this.#optionElems.length, this.labels, [this]);
   }
 
   #createIconElement (entry) {
@@ -245,7 +266,7 @@ export default class MyComboboxElement extends HTMLElement {
   #onToggle (event) {
     const isOpen = this.#popoverOpen = event.newState === 'open';
     this.#input.setAttribute('aria-expanded', isOpen);
-    this.#button.setAttribute('aria-expanded', isOpen); // Purely for CSS?!
+    this.#toggleButton.setAttribute('aria-expanded', isOpen); // Purely for CSS?!
     if (isOpen) {
       this.#input.focus();
     }
@@ -272,6 +293,11 @@ export default class MyComboboxElement extends HTMLElement {
         throw new Error(`Unrecognised command: ${command}`);
     }
     console.debug('command:', command, value, source, target, event);
+  }
+
+  #onBeforeSubmit (event) {
+    const valid = this.#setValidity();
+    console.debug('pre-submit:', valid, event);
   }
 
   #clearInput () {
@@ -301,7 +327,11 @@ export default class MyComboboxElement extends HTMLElement {
     const vMessage = message || this.#input.validationMessage;
     const anchor = this.#input;
     const { customError } = validity;
-    console.debug('setValidity - c:', customError, vMessage, validity);
+    this.#input.setAttribute('aria-invalid', !validity.valid);
     this.#internals.setValidity(validity, vMessage, anchor);
+    this.dataset.valid = validity.valid;
+    console.debug('setValidity - custom:', customError, vMessage, validity);
+    if (typeof flags.valid !== 'undefined' && !validity.valid) { this.#setError(vMessage); }
+    return validity;
   }
 }

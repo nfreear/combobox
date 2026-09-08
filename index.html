@@ -14,19 +14,21 @@
   <p>A custom element for an editable combobox, with list autocomplete.</p>
 
   <form>
+  <label for="cty">Choose a country</label>
 
-  <my-autocomplete-combobox name="country" pattern="[a-zA-Z ]+" maxlength="30" autocomplete="off" required>
-    Choose a country
+  <my-autocomplete-combobox id="cty" name="country" pattern="[a-zA-Z ]+" maxlength="30" autocomplete="off" required>
+    <!-- Choose a country -->
 
     <template shadowrootmode="open">
       <link rel="stylesheet" href="assets/my-combobox.css">
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/SebastianAigner/twemoji-amazing/twemoji-amazing.css">
-      <div class="row">
-        <label for="input"><slot></slot></label>
+      <span class="row">
+        <slot></slot>
+        <!--<label for="input"><slot></slot></label>-->
         <input id="input" role="combobox" aria-describedby="status" aria-controls="list" aria-haspopup="listbox" aria-autocomplete="list" aria-expanded="false">
-        <button commandfor="input" command="--clear" aria-label="Clear">×</button>
+        <button commandfor="input" command="--clear" aria-label="Clear"></button>
         <button commandfor="popover" command="toggle-popover" aria-label="Toggle options" tabindex="-1"></button>
-      </div>
+      </span>
       <div id="popover" popover>
         <output id="status"><!-- Live region, initially empty --></output>
         <ul id="list" role="listbox" aria-label="Country options"><!-- Via JSON fetch. --></ul>
@@ -34,7 +36,9 @@
     </template>
   </my-autocomplete-combobox>
 
-    <p><button>Submit</button></p>
+
+    <p><button type="submit">Submit</button></p>
+    <p><output name="output"></output></p>
   <form>
 
 </main>
@@ -43,5 +47,5 @@
 </footer>
 
 
-<script type="module" src="assets/app.js?run=true"></script>
+<script type="module" src="assets/app.js?run=default"></script>
 </html>
