@@ -1,4 +1,5 @@
 import MyComboboxElement from '../src/MyComboboxElement.js';
+import MyDevWarningElement from 'ndf-elements/dev';
 
 const { customElements, location } = globalThis;
 const defaultTagName = 'my-autocomplete-combobox';
@@ -12,6 +13,7 @@ if (import.meta.url.includes('run=def')) {
 
 export default async function demoApp (tagName = defaultTagName, urlArray = defaultUrlArray) {
   customElements.define(tagName, MyComboboxElement);
+  customElements.define('my-dev-warning', MyDevWarningElement);
 
   const comboboxElement = document.querySelector(tagName);
   const FORM = document.querySelector('form');

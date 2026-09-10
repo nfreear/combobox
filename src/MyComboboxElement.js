@@ -10,25 +10,25 @@ export default class MyComboboxElement extends HTMLElement {
   static formAssociated = true;
 
   #internals;
-  #iconPrefix = 'twa twa-flag-';
-  #resp;
-  #optionData;
+  #iconPrefix = 'twa twa-flag-'; // @SebastianAigner/twemoji-amazing.
+  #response;
+  #optionArray;
   #optionElems = [];
   #visibleOpt = [];
   #currentIndex = 0;
   #popoverOpen = false;
   // Form validation, etc.
-  #attrToCopy = ['autocomplete', 'maxlength', 'pattern', 'required']; // Not "minlength"!
+  #attributesToCopy = ['autocomplete', 'maxlength', 'pattern', 'placeholder', 'required']; // Not "minlength"!
 
   /* Public setters/getters.
   */
   set options (optionsArray) {
     console.assert(Array.isArray(optionsArray) && optionsArray.length, 'Invalid options array');
-    this.#optionData = optionsArray;
+    this.#optionArray = optionsArray;
     this.#createOptionElements();
   }
 
-  get options () { return this.#optionData; }
+  get options () { return this.#optionArray; }
   get name () { return this.getAttribute('name'); }
   get value () { return this.#input.value; }
   get validity () { return this.#input.validity; }
@@ -37,12 +37,18 @@ export default class MyComboboxElement extends HTMLElement {
   get form () { return this.#internals.form; }
   get labels () { return this.#internals.labels; } // Was: this.#input.labels;
   get required () { return this.#input.required; }
+  get maxLength () { return this.#input.maxLength; }
+  get minLength () { return parseInt(this.getAttribute('minlength')); }
 
-  /* Private getters.
+  /* Private getters - validation.
   */
   get #src () { return this.getAttribute('src'); }
   get #noResult () { return this.getAttribute('noresult') ?? 'No results found'; }
   get #inputError () { return this.getAttribute('input-error') ?? 'Error. Unexpected input'; }
+  get #tooShortError () { return this.getAttribute('too-short-error') ?? 'Input too short'; } /* "Please lengthen this text to 5 characters or more (you are currently using character)" */
+  get #tooShort () { return this.value.length < this.minLength; }
+  get #patternMismatch () { return this.validity.patternMismatch; }
+  get #customError () { return this.validity.customError; }
 
   /* Accessibility: enforce ARIA roles and other attributes!
   */
@@ -64,7 +70,7 @@ export default class MyComboboxElement extends HTMLElement {
     this.#input.addEventListener('input', (ev) => this.#onInput(ev));
     this.#input.addEventListener('keyup', (ev) => this.#onKeyUp(ev));
     this.#input.addEventListener('command', (ev) => this.#onCommand(ev));
-    this.#input.addEventListener('invalid', (ev) => console.debug('invalid:', ev)); // TODO: ??
+    this.addEventListener('invalid', (ev) => console.debug('invalid:', this.validity, ev)); // TODO: ?? // Was: #input
     this.#popover.addEventListener('toggle', (ev) => this.#onToggle(ev));
   }
 
@@ -73,7 +79,6 @@ export default class MyComboboxElement extends HTMLElement {
     const accName = this.#setAccessibleName();
     const copied = this.#copyInputAttributes();
     console.debug('formAssocCB:', accName, copied, form, this.#internals);
-    // Was: this.#setValidity();
     if (this.form) {
       this.form.addEventListener('formdata', (ev) => console.debug('formdata:', ev)); // TODO: ??
       this.#submitButton.addEventListener('click', (ev) => this.#onBeforeSubmit(ev));
@@ -104,12 +109,13 @@ export default class MyComboboxElement extends HTMLElement {
     const labelElem = this.labels[0];
     const accName = labelElem.textContent.trim();
     this.#input.setAttribute('aria-label', accName);
+    // Make <label> behave as it would for native <input>.
     labelElem.addEventListener('click', (ev) => { this.#input.focus(); });
     return accName;
   }
 
   #copyInputAttributes () {
-    return this.#attrToCopy.map((attr) => {
+    return this.#attributesToCopy.map((attr) => {
       const value = this.getAttribute(attr);
       if (value !== null) { this.#input.setAttribute(attr, value); }
       return { attr, value };
@@ -120,19 +126,19 @@ export default class MyComboboxElement extends HTMLElement {
   */
   async #fetchCreateOptions () {
     console.assert(this.#src, 'Missing src');
-    this.#resp = await fetch(this.#src);
-    this.dataset.httpStatus = this.#resp.status;
-    console.assert(this.#resp.ok, `Fetch error: ${this.#resp.status}`);
-    const data = await this.#resp.json();
+    this.#response = await fetch(this.#src);
+    this.dataset.httpStatus = this.#response.status;
+    console.assert(this.#response.ok, `Fetch error: ${this.#response.status}`);
+    const data = await this.#response.json();
     const options = Array.isArray(data) ? data : data.options;
     console.assert(Array.isArray(options) && options.length, 'Missing option data');
-    this.#optionData = options;
+    this.#optionArray = options;
 
     this.#createOptionElements();
   }
 
   #createOptionElements () {
-    this.#optionData.forEach((entry, idx) => {
+    this.#optionArray.forEach((entry, idx) => {
       const { name, value } = entry;
       const listItem = document.createElement('li');
       const button = document.createElement('button');
@@ -235,12 +241,13 @@ export default class MyComboboxElement extends HTMLElement {
   }
 
   #onInput (event) {
+    const insertText = event.inputType === 'insertText'; // 'deleteContentBackward'.
     const value = event.target.value.trim();
     let count = 0;
 
     this.#currentIndex = -1;
 
-    if (!this.#input.checkValidity()) {
+    if (insertText && this.#patternMismatch) { // Was: !this.#input.checkValidity()
       return this.#setError(this.#inputError);
     }
 
@@ -252,9 +259,10 @@ export default class MyComboboxElement extends HTMLElement {
       this.#reselectVisibleOptions();
 
       this.dataset.count = count;
-      this.#updateStatus(count <= 0 ? this.#noResult : ''); // `${count} results`);
+      this.#updateStatus(count ? '' : this.#noResult); // `${count} results`);
+      this.#input.setCustomValidity(count ? '' : this.#noResult);
       if (!count) {
-        this.#input.setCustomValidity(this.#noResult);
+        console.warn(this.#noResult);
       }
     } else {
       this.#clearInput();
@@ -267,6 +275,7 @@ export default class MyComboboxElement extends HTMLElement {
     const isOpen = this.#popoverOpen = event.newState === 'open';
     this.#input.setAttribute('aria-expanded', isOpen);
     this.#toggleButton.setAttribute('aria-expanded', isOpen); // Purely for CSS?!
+    this.#listbox.removeAttribute('hidden');
     if (isOpen) {
       this.#input.focus();
     }
@@ -296,6 +305,9 @@ export default class MyComboboxElement extends HTMLElement {
   }
 
   #onBeforeSubmit (event) {
+    if (this.validity.valid && this.#tooShort) {
+      this.#input.setCustomValidity(this.#tooShortError);
+    }
     const valid = this.#setValidity();
     console.debug('pre-submit:', valid, event);
   }
@@ -315,23 +327,24 @@ export default class MyComboboxElement extends HTMLElement {
 
   #setError (message) {
     // this.#setValidity({ customError: true }, message);
+    message = this.#input.validationMessage; // ??
     this.dataset.error = message;
-    this.#updateStatus(this.#input.validationMessage); // message);
+    this.#updateStatus(message);
     this.#listbox.setAttribute('hidden', '');
     this.#togglePopover(true);
-    console.error(message);
+    console.warn(message);
   }
 
   #setValidity (flags, message) {
-    const validity = flags || this.#input.validity;
-    const vMessage = message || this.#input.validationMessage;
+    const validity = flags || this.validity;
+    const vMessage = message || this.validationMessage;
     const anchor = this.#input;
     const { customError } = validity;
     this.#input.setAttribute('aria-invalid', !validity.valid);
     this.#internals.setValidity(validity, vMessage, anchor);
     this.dataset.valid = validity.valid;
     console.debug('setValidity - custom:', customError, vMessage, validity);
-    if (typeof flags.valid !== 'undefined' && !validity.valid) { this.#setError(vMessage); }
+    // if (!validity.valid && vMessage) { this.#setError(vMessage); }
     return validity;
   }
 }

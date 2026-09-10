@@ -30,7 +30,7 @@ const comboBox = document.querySelector('my-combobox');
 // Set an options array.
 comboBox.options = [
   {
-    "name": "Afghanistan",  // Visual label.
+    "name": "Afghanistan",  // Required, visual label.
     "value": "afghanistan", // Optional.
     "code": "AF",           // Optional, country code based on ISO 3166-1 alpha-2
     "emoji": "🇦🇫"           // Optional.
@@ -39,7 +39,7 @@ comboBox.options = [
 ];
 ```
 
-Form submission test:
+Form submission:
 ```js
 const form = document.querySelector('form');
 
@@ -51,16 +51,35 @@ form.addEventListener('submit', (event) => {
 
 See [`index.html`][html] for a complete example, including shadow DOM:
 ```html
-<label for="cty">Choose a country</label>
+<form>
+  <label for="cty">Choose a country</label>
 
-<my-combobox id="cty" name="country">
-  <mytemplate shadowrootmode="open">
-    ...
-  </my-template>
-</my-combobox>
+  <my-combobox id="cty" name="country">
+    <mytemplate shadowrootmode="open">
+      ...
+    </my-template>
+  </my-combobox>
+
+  <button>Submit</button>
+</form>
 ```
 
-## `<label for>`
+## Forms
+
+The `<my-combobox>` custom element participates in HTML forms. Specifically, it has the following readonly properties, similar to an [`<input>`][input] element:
+
+* `name` - Name that identifies the element when submitting the form.
+* `value` - The current value of the control.
+* `validity` - Returns the element's current validity state.
+* `validityMessage` - Returns a localized message that describes the validation constraints that the control does not satisfy (if any).
+* `willValidate` -
+* `form` - Returns a reference to the parent `<form>` element.
+* `labels` - Returns a list of `<label>` elements that are labels for this element.
+* `required` - A boolean that represents the element's `required` attribute.
+* `minLength` - A number that represents the element's `minlength` attribute.
+
+### `<label for>`
+
 Note that a `<label for>` element only works with the custom element because it is [form-associated][form], and has been coded to support it.
 
 In general, custom elements do __not__ support `<label for>`!
@@ -84,6 +103,7 @@ Thanks to [@SebastianAigner][twemoji], [@risan][] and others for emoji flag supp
 [dec]: https://web.dev/articles/declarative-shadow-dom
 [el]: https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements
 [form]: https://web.dev/articles/more-capable-form-controls
+[input]: https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement#instance_properties
 [html]: https://github.com/nfreear/combobox/blob/main/index.html
 [cdn]: https://esm.sh/gh/nfreear/combobox
 [mit]: https://nfreear.mit-license.org/2026

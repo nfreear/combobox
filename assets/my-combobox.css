@@ -65,7 +65,7 @@ input {
   border: 1px solid gray;
   border-radius: .3rem;
   max-height: var(--my-cb-popover-max-height, 100vh);
-  min-width: 11rem;
+  min-width: var(--my-cb-popover-min-width, 11.5rem);
   overflow-y: scroll;
   position-area: center bottom;
 }
@@ -77,6 +77,8 @@ ul {
 
   li {
     button {
+      font-size: var(--my-cb-option-font-size, .92rem);
+      padding: var(--my-cb-option-padding, .2rem);
       text-align: left;
       width: 100%;
       margin-bottom: .1rem;

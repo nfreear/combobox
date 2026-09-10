@@ -16,7 +16,7 @@
   <form>
   <label for="cty">Choose a country</label>
 
-  <my-autocomplete-combobox id="cty" name="country" pattern="[a-zA-Z ]+" maxlength="30" autocomplete="off" required>
+  <my-autocomplete-combobox id="cty" name="country" pattern="[a-zA-Z ]+" minlength="5" maxlength="30" autocomplete="off" required>
     <!-- Choose a country -->
 
     <template shadowrootmode="open">
@@ -46,6 +46,18 @@
   <p>Source: <a href="https://github.com/nfreear/combobox">@nfreear/combobox</a></p>
 </footer>
 
+<p><my-dev-warning></my-dev-warning></p>
+
+
+<script type="importmap"> {
+  "imports": {
+    "ndf-elements/i": "https://nfreear.github.io/elements/i.js",
+    "ndf-elements/dev": "https://esm.sh/gh/nfreear/elements/dev"
+  },
+  "myElements": {
+    "use": [ "my-dev-warning" ]
+  }
+} </script>
 
 <script type="module" src="assets/app.js?run=default"></script>
 </html>
