@@ -2,6 +2,7 @@
   "type": "module",
   "exports": {
     ".": "src/MyComboboxElement.js",
+    "./template": "src/htmlTemplate.js",
     "./app": "assets/app.js",
     "./style": "assets/my-combobox.css",
     "./data": "assets/countries.en.json"

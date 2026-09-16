@@ -1,24 +1,30 @@
+// Keep in separate file for now.
+import { defaultOptions, htmlTemplate, attachTemplate } from './htmlTemplate.js';
+
 const { fetch, HTMLElement, CommandEvent } = globalThis;
 
 /**
  * A custom element for an editable combobox, with list autocomplete.
  *
+ * @see https://github.com/nfreear/combobox
  * @customElement my-combobox
  * @license MIT
  */
 export default class MyComboboxElement extends HTMLElement {
   static formAssociated = true;
 
+  #declShadow = true;
   #internals;
   #iconPrefix = 'twa twa-flag-'; // @SebastianAigner/twemoji-amazing.
-  #response;
+  #httpResponse;
   #optionArray;
   #optionElems = [];
   #visibleOpt = [];
   #currentIndex = 0;
   #popoverOpen = false;
+  #accessibleName;
   // Form validation, etc.
-  #attributesToCopy = ['autocomplete', 'maxlength', 'pattern', 'placeholder', 'required']; // Not "minlength"!
+  #attributesToCopy = ['autocomplete', 'maxlength', 'pattern', 'placeholder', 'required', 'type']; // Not "minlength"!
 
   /* Public setters/getters.
   */
@@ -59,8 +65,23 @@ export default class MyComboboxElement extends HTMLElement {
   get #toggleButton () { return this.shadowRoot.querySelector('button[command *= toggle]'); }
   get #submitButton () { return this.form.querySelector('[type = submit]'); }
 
+  get #templateOptions () {
+    const { clear, listbox, toggle, stylesheet, emojiStylesheet } = defaultOptions;
+    return {
+      clear: this.getAttribute('clear-name') ?? clear,
+      listbox: this.getAttribute('listbox-name') ?? listbox,
+      toggle: this.getAttribute('toggle-name') ?? toggle,
+      stylesheet: this.getAttribute('stylesheet') ?? stylesheet,
+      emojiStylesheet: this.getAttribute('emoji-stylesheet') ?? emojiStylesheet
+    };
+  }
+
   constructor () {
     super();
+    if (!this.shadowRoot) {
+      attachTemplate(htmlTemplate, this.#templateOptions).to.shadowDOM(this);
+      this.#declShadow = false;
+    }
     this.#internals = this.attachInternals();
     this.#expectations();
     if (this.#src) {
@@ -107,9 +128,9 @@ export default class MyComboboxElement extends HTMLElement {
   #setAccessibleName () {
     console.assert(this.labels && this.labels.length, 'Missing label');
     const labelElem = this.labels[0];
-    const accName = labelElem.textContent.trim();
+    const accName = this.#accessibleName = labelElem.textContent.trim();
     this.#input.setAttribute('aria-label', accName);
-    // Make <label> behave as it would for native <input>.
+    // Usability: make <label> behave as it would for native <input>.
     labelElem.addEventListener('click', (ev) => { this.#input.focus(); });
     return accName;
   }
@@ -126,10 +147,10 @@ export default class MyComboboxElement extends HTMLElement {
   */
   async #fetchCreateOptions () {
     console.assert(this.#src, 'Missing src');
-    this.#response = await fetch(this.#src);
-    this.dataset.httpStatus = this.#response.status;
-    console.assert(this.#response.ok, `Fetch error: ${this.#response.status}`);
-    const data = await this.#response.json();
+    const resp = this.#httpResponse = await fetch(this.#src);
+    this.dataset.httpStatus = resp.status;
+    console.assert(resp.ok, `Fetch error: ${resp.status}`);
+    const data = await resp.json();
     const options = Array.isArray(data) ? data : data.options;
     console.assert(Array.isArray(options) && options.length, 'Missing option data');
     this.#optionArray = options;
@@ -164,7 +185,7 @@ export default class MyComboboxElement extends HTMLElement {
 
   #createIconElement (entry) {
     const { name, value, emoji, iconId } = entry;
-    const iconElem = document.createElement('ico');
+    const iconElem = document.createElement('x-icon');
     const theIconId = (iconId || value || name).replace(/ /g, '-').toLowerCase();
     iconElem.className = `${this.#iconPrefix}${theIconId}`;
     iconElem.dataset.emoji = emoji;

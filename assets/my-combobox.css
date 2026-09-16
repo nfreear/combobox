@@ -1,4 +1,5 @@
 * {
+  X_border-radius: 1rem;
   outline-offset: .2rem;
 }
 
@@ -82,6 +83,10 @@ ul {
       text-align: left;
       width: 100%;
       margin-bottom: .1rem;
+
+      x-icon {
+        display: var(--my-cb-icon-display);
+      }
 
       .twa {
         margin-right: .3rem;
