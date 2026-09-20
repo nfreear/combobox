@@ -52,9 +52,21 @@ form.addEventListener('submit', (event) => {
 See [`index.html`][html] for a complete example, including shadow DOM:
 ```html
 <form>
-  <label for="cty">Choose a country</label>
+  <label for="mycb">Choose a country</label>
 
-  <my-combobox id="cty" name="country">
+  <my-combobox id="mycb" name="country" … pattern="…" required>
+  </my-combobox>
+
+  <button>Submit</button>
+</form>
+```
+
+See [`select.html`][select] for an example including shadow DOM:
+```html
+<form>
+  <label for="mycb">Choose a mammal</label>
+
+  <my-combobox id="mycb" name="mammal">
     <mytemplate shadowrootmode="open">
       ...
     </my-template>
@@ -64,9 +76,10 @@ See [`index.html`][html] for a complete example, including shadow DOM:
 </form>
 ```
 
+
 ## Forms
 
-The `<my-combobox>` custom element participates in HTML forms. Specifically, it has the following readonly properties, similar to an [`<input>`][input] element:
+The `<my-combobox>` custom element participates in HTML forms, and will appear in the [`form.elements`][elements] property. Specifically, it has the following readonly properties, similar to an [`<input>`][input] element:
 
 * `name` - Name that identifies the element when submitting the form.
 * `value` - The current value of the control.
@@ -76,6 +89,7 @@ The `<my-combobox>` custom element participates in HTML forms. Specifically, it 
 * `form` - Returns a reference to the parent `<form>` element.
 * `labels` - Returns a list of `<label>` elements that are labels for this element.
 * `required` - A boolean that represents the element's `required` attribute.
+* `maxLength` - A number that represents the element's `maxlength` attribute.
 * `minLength` - A number that represents the element's `minlength` attribute.
 
 ### `<label for>`
@@ -103,8 +117,10 @@ Thanks to [@SebastianAigner][twemoji], [@risan][] and others for emoji flag supp
 [dec]: https://web.dev/articles/declarative-shadow-dom
 [el]: https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_custom_elements
 [form]: https://web.dev/articles/more-capable-form-controls
+[elements]: https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/elements
 [input]: https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement#instance_properties
 [html]: https://github.com/nfreear/combobox/blob/main/index.html
+[select]: https://github.com/nfreear/combobox/blob/main/demo/select.html
 [cdn]: https://esm.sh/gh/nfreear/combobox
 [mit]: https://nfreear.mit-license.org/2026
 

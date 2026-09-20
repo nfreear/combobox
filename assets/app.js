@@ -2,13 +2,15 @@ import MyComboboxElement from '../src/MyComboboxElement.js';
 import MyDevWarningElement from 'ndf-elements/dev';
 
 const { customElements, location } = globalThis;
+const { resolve, url } = import.meta;
 const defaultTagName = 'my-autocomplete-combobox';
-const defaultUrlArray = ['https://unpkg.com/country-flag-emoji-json@^2', 'assets/countries.en.json'];
+const defaultUrlArray = ['https://unpkg.com/country-flag-emoji-json@^2', resolve('./countries.en.json')];
 
-if (import.meta.url.includes('run=def')) {
+if (url.includes('run=def')) {
   demoApp();
-} else if (import.meta.url.includes('run=select')) {
-  demoApp('my-select-combobox', [null, 'assets/us-states.en.json']);
+} else if (url.includes('run=select')) {
+  demoApp('my-select-combobox', [null, resolve('./mammals.en.json')]);
+  // demoApp('my-select-combobox', [null, resolve('./us-states.en.json')]);
 }
 
 export default async function demoApp (tagName = defaultTagName, urlArray = defaultUrlArray) {
@@ -36,7 +38,7 @@ export async function fetchJsonOptions (jsonUrl) {
   return options;
 }
 
-export function onSubmit (event, key = 'country') {
+export function onSubmit (event, key = 'mycb') {
   event.preventDefault();
 
   const { elements } = event.target;

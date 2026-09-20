@@ -25,6 +25,8 @@ button {
   padding: .2rem 1rem;
 }
 
+/* Same class/functionality - different names?!
+*/
 my-combobox,
 my-select-combobox,
 my-autocomplete-combobox {

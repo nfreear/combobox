@@ -14,26 +14,11 @@
   <p>A custom element for an editable combobox, with list autocomplete.</p>
 
   <form>
-  <label for="cty">Choose a country</label>
+  <label for="mycb">Choose a country</label>
 
-  <my-autocomplete-combobox id="cty" name="country" pattern="[a-zA-Z ]+" minlength="5" maxlength="30" autocomplete="off" required>
-    <!-- Choose a country -->
-
-    <template shadowrootmode="open">
-      <link rel="stylesheet" href="assets/my-combobox.css">
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/SebastianAigner/twemoji-amazing/twemoji-amazing.css">
-      <span class="row">
-        <slot></slot>
-        <!--<label for="input"><slot></slot></label>-->
-        <input id="input" role="combobox" aria-describedby="status" aria-controls="list" aria-haspopup="listbox" aria-autocomplete="list" aria-expanded="false">
-        <button commandfor="input" command="--clear" aria-label="Clear"></button>
-        <button commandfor="popover" command="toggle-popover" aria-label="Toggle options" tabindex="-1"></button>
-      </span>
-      <div id="popover" popover>
-        <output id="status"><!-- Live region, initially empty --></output>
-        <ul id="list" role="listbox" aria-label="Country options"><!-- Via JSON fetch. --></ul>
-      </div>
-    </template>
+  <my-autocomplete-combobox id="mycb" name="country" placeholder="Start typing…"
+    pattern="[a-zA-Z ]+" minlength="5" maxlength="30" autocomplete="off" required
+  >
   </my-autocomplete-combobox>
 
 

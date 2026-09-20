@@ -1,10 +1,11 @@
 const { DOMParser } = globalThis;
+const { resolve } = import.meta;
 
 export const defaultOptions = {
   clear: 'Clear',
   listbox: 'Options',
   toggle: 'Toggle options',
-  stylesheet: 'assets/my-combobox.css',
+  stylesheet: resolve('../assets/my-combobox.css'),
   emojiStylesheet: 'https://cdn.jsdelivr.net/gh/SebastianAigner/twemoji-amazing/twemoji-amazing.css'
 };
 

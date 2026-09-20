@@ -1,0 +1,537 @@
+{
+  "#": [
+    "Source: https://github.com/amio/emoji.json"
+  ],
+  "options": [
+    {
+      "codes": "1F9A1",
+      "char": "🦡",
+      "name": "badger",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F987",
+      "char": "🦇",
+      "name": "bat",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F43B",
+      "char": "🐻",
+      "name": "bear",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F9AB",
+      "char": "🦫",
+      "name": "beaver",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F9AC",
+      "char": "🦬",
+      "name": "bison",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F408 200D 2B1B",
+      "char": "🐈‍⬛",
+      "name": "black cat",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F417",
+      "char": "🐗",
+      "name": "boar",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F42A",
+      "char": "🐪",
+      "name": "camel",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F408",
+      "char": "🐈",
+      "name": "cat",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F431",
+      "char": "🐱",
+      "name": "cat face",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+  },
+
+  {
+    "codes": "1F43F",
+      "char": "🐿",
+      "name": "chipmunk",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F404",
+      "char": "🐄",
+      "name": "cow",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F42E",
+      "char": "🐮",
+      "name": "cow face",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F98C",
+      "char": "🦌",
+      "name": "deer",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F415",
+      "char": "🐕",
+      "name": "dog",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F436",
+      "char": "🐶",
+      "name": "dog face",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1FACF",
+      "char": "🫏",
+      "name": "donkey",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F418",
+      "char": "🐘",
+      "name": "elephant",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F411",
+      "char": "🐑",
+      "name": "ewe",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F98A",
+      "char": "🦊",
+      "name": "fox",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F992",
+      "char": "🦒",
+      "name": "giraffe",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F410",
+      "char": "🐐",
+      "name": "goat",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F98D",
+      "char": "🦍",
+      "name": "gorilla",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F9AE",
+      "char": "🦮",
+      "name": "guide dog",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F439",
+      "char": "🐹",
+      "name": "hamster",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F994",
+      "char": "🦔",
+      "name": "hedgehog",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F99B",
+      "char": "🦛",
+      "name": "hippopotamus",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F40E",
+      "char": "🐎",
+      "name": "horse",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F434",
+      "char": "🐴",
+      "name": "horse face",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F998",
+      "char": "🦘",
+      "name": "kangaroo",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F428",
+      "char": "🐨",
+      "name": "koala",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F406",
+      "char": "🐆",
+      "name": "leopard",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F981",
+      "char": "🦁",
+      "name": "lion",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F999",
+      "char": "🦙",
+      "name": "llama",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F9A3",
+      "char": "🦣",
+      "name": "mammoth",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F412",
+      "char": "🐒",
+      "name": "monkey",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F435",
+      "char": "🐵",
+      "name": "monkey face",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1FACE",
+      "char": "🫎",
+      "name": "moose",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F401",
+      "char": "🐁",
+      "name": "mouse",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F42D",
+      "char": "🐭",
+      "name": "mouse face",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F9A7",
+      "char": "🦧",
+      "name": "orangutan",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F9A6",
+      "char": "🦦",
+      "name": "otter",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F402",
+      "char": "🐂",
+      "name": "ox",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F43C",
+      "char": "🐼",
+      "name": "panda",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F43E",
+      "char": "🐾",
+      "name": "paw prints",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F416",
+      "char": "🐖",
+      "name": "pig",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F437",
+      "char": "🐷",
+      "name": "pig face",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F43D",
+      "char": "🐽",
+      "name": "pig nose",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+  },
+
+  {
+    "codes": "1F43B 200D 2744",
+      "char": "🐻‍❄",
+      "name": "polar bear",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F429",
+      "char": "🐩",
+      "name": "poodle",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F407",
+      "char": "🐇",
+      "name": "rabbit",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F430",
+      "char": "🐰",
+      "name": "rabbit face",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F99D",
+      "char": "🦝",
+      "name": "raccoon",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F40F",
+      "char": "🐏",
+      "name": "ram",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F400",
+      "char": "🐀",
+      "name": "rat",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F98F",
+      "char": "🦏",
+      "name": "rhinoceros",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F415 200D 1F9BA",
+      "char": "🐕‍🦺",
+      "name": "service dog",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F9A8",
+      "char": "🦨",
+      "name": "skunk",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F9A5",
+      "char": "🦥",
+      "name": "sloth",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F405",
+      "char": "🐅",
+      "name": "tiger",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F42F",
+      "char": "🐯",
+      "name": "tiger face",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F42B",
+      "char": "🐫",
+      "name": "two-hump camel",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F984",
+      "char": "🦄",
+      "name": "unicorn",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F403",
+      "char": "🐃",
+      "name": "water buffalo",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F43A",
+      "char": "🐺",
+      "name": "wolf",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    },
+    {
+      "codes": "1F993",
+      "char": "🦓",
+      "name": "zebra",
+      "category": "Animals & Nature (animal-mammal)",
+      "group": "Animals & Nature",
+      "subgroup": "animal-mammal"
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="../assets/app.css">
+
+<style>
+my-select-combobox {
+  --X__my-cb-icon-display: none !important;
+  --X__my-cb-icon-display: inline;
+  --my-cb-option-padding: .2rem .4rem;
+}
+</style>
+
+<title>my-combobox</title>
+
+<header>
+  <h1>my-combobox</h1>
+</header>
+<main>
+  <p>A custom element, this time used for a select-only combobox.</p>
+  <p>The example uses declarative shadow DOM.</p>
+
+
+  <form>
+    <label for="mycb">Choose a mammal</label>
+
+    <my-select-combobox use-emoji id="mycb" name="mammal" type="button"
+      placeholder="Please select" listbox-name="List of mammals"
+    >
+      <template shadowrootmode="open">
+        <link rel="stylesheet" href="../assets/my-combobox.css">
+        <span class="row">
+          <slot></slot>
+          <input type="button" id="input" role="combobox" aria-describedby="status" aria-controls="list" aria-haspopup="listbox" aria-expanded="false">
+          <button commandfor="input" command="--clear" aria-label="Clear"></button>
+          <button commandfor="popover" command="toggle-popover" aria-label="Toggle options" tabindex="-1"></button>
+        </span>
+        <div id="popover" popover>
+          <output id="status"><!-- Live region, initially empty --></output>
+          <ul id="list" role="listbox" aria-label="List of mammals"><!-- Via JSON fetch. --></ul>
+        </div>
+      </template>
+    </my-select-combobox>
+
+
+    <p><button type="submit">Submit</button>
+    <p><output name="output"></output></p>
+  </form>
+
+
+</main>
+<footer>
+  <p>Source: <a href="https://github.com/nfreear/combobox">@nfreear/combobox</a></p>
+</footer>
+
+<p><my-dev-warning></my-dev-warning></p>
+
+
+<script type="importmap"> {
+  "imports": {
+    "ndf-elements/i": "https://nfreear.github.io/elements/i.js",
+    "ndf-elements/dev": "https://esm.sh/gh/nfreear/elements/dev"
+  },
+  "myElements": {
+    "use": [ "my-dev-warning" ]
+  }
+} </script>
+
+<script type="module" src="../assets/app.js?run=select"></script>
+
+</html>

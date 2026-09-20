@@ -42,6 +42,7 @@ export default class MyComboboxElement extends HTMLElement {
   get willValidate () { return this.#internals.willValidate; }
   get form () { return this.#internals.form; }
   get labels () { return this.#internals.labels; } // Was: this.#input.labels;
+  get placeholder () { return this.getAttribute('placeholder'); }
   get required () { return this.#input.required; }
   get maxLength () { return this.#input.maxLength; }
   get minLength () { return parseInt(this.getAttribute('minlength')); }
@@ -55,6 +56,7 @@ export default class MyComboboxElement extends HTMLElement {
   get #tooShort () { return this.value.length < this.minLength; }
   get #patternMismatch () { return this.validity.patternMismatch; }
   get #customError () { return this.validity.customError; }
+  get #isButton () { return this.getAttribute('type') === 'button'; }
 
   /* Accessibility: enforce ARIA roles and other attributes!
   */
@@ -63,7 +65,7 @@ export default class MyComboboxElement extends HTMLElement {
   get #listbox () { return this.#popover.querySelector('ul[role = listbox]'); }
   get #output () { return this.shadowRoot.querySelector('output, [aria-live]'); }
   get #toggleButton () { return this.shadowRoot.querySelector('button[command *= toggle]'); }
-  get #submitButton () { return this.form.querySelector('[type = submit]'); }
+  get #formSubmitButton () { return this.form.querySelector('[type = submit]'); }
 
   get #templateOptions () {
     const { clear, listbox, toggle, stylesheet, emojiStylesheet } = defaultOptions;
@@ -82,6 +84,9 @@ export default class MyComboboxElement extends HTMLElement {
       attachTemplate(htmlTemplate, this.#templateOptions).to.shadowDOM(this);
       this.#declShadow = false;
     }
+    if (this.#isButton && this.placeholder) {
+      this.#input.value = this.placeholder;
+    }
     this.#internals = this.attachInternals();
     this.#expectations();
     if (this.#src) {
@@ -96,13 +101,13 @@ export default class MyComboboxElement extends HTMLElement {
   }
 
   formAssociatedCallback (form) {
-    console.assert(this.#submitButton, 'Missing form submit button');
+    console.assert(this.#formSubmitButton, 'Missing form submit button');
     const accName = this.#setAccessibleName();
     const copied = this.#copyInputAttributes();
     console.debug('formAssocCB:', accName, copied, form, this.#internals);
     if (this.form) {
       this.form.addEventListener('formdata', (ev) => console.debug('formdata:', ev)); // TODO: ??
-      this.#submitButton.addEventListener('click', (ev) => this.#onBeforeSubmit(ev));
+      this.#formSubmitButton.addEventListener('click', (ev) => this.#onBeforeSubmit(ev));
     }
   }
 
@@ -184,11 +189,11 @@ export default class MyComboboxElement extends HTMLElement {
   }
 
   #createIconElement (entry) {
-    const { name, value, emoji, iconId } = entry;
+    const { name, value, emoji, char, iconId } = entry;
     const iconElem = document.createElement('x-icon');
     const theIconId = (iconId || value || name).replace(/ /g, '-').toLowerCase();
     iconElem.className = `${this.#iconPrefix}${theIconId}`;
-    iconElem.dataset.emoji = emoji;
+    iconElem.dataset.emoji = emoji || char;
     iconElem.setAttribute('part', 'icon');
     iconElem.setAttribute('aria-hidden', 'true');
     return iconElem;
