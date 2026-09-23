@@ -126,7 +126,7 @@ export default class MyComboboxElement extends HTMLElement {
   }
 
   #reselectVisibleOptions () {
-    this.#visibleOpt = this.#listbox.querySelectorAll(':not([hidden]) [role = option]');
+    this.#visibleOpt = this.#listbox.querySelectorAll('li:not([hidden]) [role = option]');
   }
 
   /* Accessibility: find and use <label> content.
