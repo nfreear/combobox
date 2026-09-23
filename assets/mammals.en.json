@@ -76,16 +76,7 @@
       "subgroup": "animal-mammal"
     },
     {
-      "codes": "1F431",
-      "char": "🐱",
-      "name": "cat face",
-      "category": "Animals & Nature (animal-mammal)",
-      "group": "Animals & Nature",
-      "subgroup": "animal-mammal"
-  },
-
-  {
-    "codes": "1F43F",
+      "codes": "1F43F",
       "char": "🐿",
       "name": "chipmunk",
       "category": "Animals & Nature (animal-mammal)",
@@ -96,14 +87,6 @@
       "codes": "1F404",
       "char": "🐄",
       "name": "cow",
-      "category": "Animals & Nature (animal-mammal)",
-      "group": "Animals & Nature",
-      "subgroup": "animal-mammal"
-    },
-    {
-      "codes": "1F42E",
-      "char": "🐮",
-      "name": "cow face",
       "category": "Animals & Nature (animal-mammal)",
       "group": "Animals & Nature",
       "subgroup": "animal-mammal"
@@ -120,14 +103,6 @@
       "codes": "1F415",
       "char": "🐕",
       "name": "dog",
-      "category": "Animals & Nature (animal-mammal)",
-      "group": "Animals & Nature",
-      "subgroup": "animal-mammal"
-    },
-    {
-      "codes": "1F436",
-      "char": "🐶",
-      "name": "dog face",
       "category": "Animals & Nature (animal-mammal)",
       "group": "Animals & Nature",
       "subgroup": "animal-mammal"
@@ -229,14 +204,6 @@
       "subgroup": "animal-mammal"
     },
     {
-      "codes": "1F434",
-      "char": "🐴",
-      "name": "horse face",
-      "category": "Animals & Nature (animal-mammal)",
-      "group": "Animals & Nature",
-      "subgroup": "animal-mammal"
-    },
-    {
       "codes": "1F998",
       "char": "🦘",
       "name": "kangaroo",
@@ -293,14 +260,6 @@
       "subgroup": "animal-mammal"
     },
     {
-      "codes": "1F435",
-      "char": "🐵",
-      "name": "monkey face",
-      "category": "Animals & Nature (animal-mammal)",
-      "group": "Animals & Nature",
-      "subgroup": "animal-mammal"
-    },
-    {
       "codes": "1FACE",
       "char": "🫎",
       "name": "moose",
@@ -312,14 +271,6 @@
       "codes": "1F401",
       "char": "🐁",
       "name": "mouse",
-      "category": "Animals & Nature (animal-mammal)",
-      "group": "Animals & Nature",
-      "subgroup": "animal-mammal"
-    },
-    {
-      "codes": "1F42D",
-      "char": "🐭",
-      "name": "mouse face",
       "category": "Animals & Nature (animal-mammal)",
       "group": "Animals & Nature",
       "subgroup": "animal-mammal"
@@ -357,14 +308,6 @@
       "subgroup": "animal-mammal"
     },
     {
-      "codes": "1F43E",
-      "char": "🐾",
-      "name": "paw prints",
-      "category": "Animals & Nature (animal-mammal)",
-      "group": "Animals & Nature",
-      "subgroup": "animal-mammal"
-    },
-    {
       "codes": "1F416",
       "char": "🐖",
       "name": "pig",
@@ -373,24 +316,7 @@
       "subgroup": "animal-mammal"
     },
     {
-      "codes": "1F437",
-      "char": "🐷",
-      "name": "pig face",
-      "category": "Animals & Nature (animal-mammal)",
-      "group": "Animals & Nature",
-      "subgroup": "animal-mammal"
-    },
-    {
-      "codes": "1F43D",
-      "char": "🐽",
-      "name": "pig nose",
-      "category": "Animals & Nature (animal-mammal)",
-      "group": "Animals & Nature",
-      "subgroup": "animal-mammal"
-  },
-
-  {
-    "codes": "1F43B 200D 2744",
+      "codes": "1F43B 200D 2744",
       "char": "🐻‍❄",
       "name": "polar bear",
       "category": "Animals & Nature (animal-mammal)",
@@ -409,14 +335,6 @@
       "codes": "1F407",
       "char": "🐇",
       "name": "rabbit",
-      "category": "Animals & Nature (animal-mammal)",
-      "group": "Animals & Nature",
-      "subgroup": "animal-mammal"
-    },
-    {
-      "codes": "1F430",
-      "char": "🐰",
-      "name": "rabbit face",
       "category": "Animals & Nature (animal-mammal)",
       "group": "Animals & Nature",
       "subgroup": "animal-mammal"
@@ -481,14 +399,6 @@
       "codes": "1F405",
       "char": "🐅",
       "name": "tiger",
-      "category": "Animals & Nature (animal-mammal)",
-      "group": "Animals & Nature",
-      "subgroup": "animal-mammal"
-    },
-    {
-      "codes": "1F42F",
-      "char": "🐯",
-      "name": "tiger face",
       "category": "Animals & Nature (animal-mammal)",
       "group": "Animals & Nature",
       "subgroup": "animal-mammal"

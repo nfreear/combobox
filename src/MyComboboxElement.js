@@ -24,7 +24,7 @@ export default class MyComboboxElement extends HTMLElement {
   #popoverOpen = false;
   #accessibleName;
   // Form validation, etc.
-  #attributesToCopy = ['autocomplete', 'maxlength', 'pattern', 'placeholder', 'required', 'type']; // Not "minlength"!
+  #attributesToCopy = ['autocomplete', 'autocorrect', 'maxlength', 'pattern', 'placeholder', 'required', 'spellcheck', 'type']; // Not "minlength"!
 
   /* Public setters/getters.
   */
@@ -53,10 +53,10 @@ export default class MyComboboxElement extends HTMLElement {
   get #noResult () { return this.getAttribute('noresult') ?? 'No results found'; }
   get #inputError () { return this.getAttribute('input-error') ?? 'Error. Unexpected input'; }
   get #tooShortError () { return this.getAttribute('too-short-error') ?? 'Input too short'; } /* "Please lengthen this text to 5 characters or more (you are currently using character)" */
-  get #tooShort () { return this.value.length < this.minLength; }
+  get #tooShort () { return this.value.length < this.minLength; } // Late evaluation.
   get #patternMismatch () { return this.validity.patternMismatch; }
   get #customError () { return this.validity.customError; }
-  get #isButton () { return this.getAttribute('type') === 'button'; }
+  get #isSelectButton () { return this.getAttribute('type') === 'button'; }
 
   /* Accessibility: enforce ARIA roles and other attributes!
   */
@@ -81,10 +81,11 @@ export default class MyComboboxElement extends HTMLElement {
   constructor () {
     super();
     if (!this.shadowRoot) {
+      // No declarative shadow DOM.
       attachTemplate(htmlTemplate, this.#templateOptions).to.shadowDOM(this);
       this.#declShadow = false;
     }
-    if (this.#isButton && this.placeholder) {
+    if (this.#isSelectButton && this.placeholder) {
       this.#input.value = this.placeholder;
     }
     this.#internals = this.attachInternals();
@@ -105,8 +106,8 @@ export default class MyComboboxElement extends HTMLElement {
     const accName = this.#setAccessibleName();
     const copied = this.#copyInputAttributes();
     console.debug('formAssocCB:', accName, copied, form, this.#internals);
-    if (this.form) {
-      this.form.addEventListener('formdata', (ev) => console.debug('formdata:', ev)); // TODO: ??
+    form.addEventListener('formdata', (ev) => console.debug('formdata:', ev)); // TODO: ??
+    if (this.#formSubmitButton) {
       this.#formSubmitButton.addEventListener('click', (ev) => this.#onBeforeSubmit(ev));
     }
   }
@@ -116,7 +117,7 @@ export default class MyComboboxElement extends HTMLElement {
   }
 
   #expectations () {
-    console.assert(this.shadowRoot, 'Missing declarative shadow DOM');
+    console.assert(this.shadowRoot, 'Missing shadow DOM');
     console.assert(this.#input, 'Missing input');
     console.assert(this.#popover, 'Missing popover');
     console.assert(this.#listbox, 'Missing listbox');

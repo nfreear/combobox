@@ -22,7 +22,17 @@ footer {
 
 button {
   font-size: inherit;
-  padding: .2rem 1rem;
+  padding: .5rem 1rem;
+}
+
+output {
+  background: #333;
+  border: 1px dotted gray;
+  border-radius: .2rem;
+  display: inline-block;
+  min-height: 1.1rem;
+  min-width: 11rem;
+  padding: .5rem;
 }
 
 /* Same class/functionality - different names?!
@@ -32,6 +42,11 @@ my-select-combobox,
 my-autocomplete-combobox {
   display: inline-block;
   margin: 2rem 0;
+}
+
+my-select-combobox {
+  --my-cb-input-width: 10rem;
+  --my-cb-option-padding: .2rem .4rem;
 }
 
 * {

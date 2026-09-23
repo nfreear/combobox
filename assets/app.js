@@ -17,10 +17,11 @@ export default async function demoApp (tagName = defaultTagName, urlArray = defa
   customElements.define(tagName, MyComboboxElement);
   customElements.define('my-dev-warning', MyDevWarningElement);
 
-  const comboboxElement = document.querySelector(tagName);
   const FORM = document.querySelector('form');
+  const comboboxElement = FORM.querySelector(tagName);
   const ALL = location.search.includes('all');
   const jsonUrl = ALL ? urlArray[0] : urlArray[1];
+  console.assert(FORM, 'Missing form');
   console.assert(comboboxElement.constructor.formAssociated, 'Expect form-associated');
 
   FORM.addEventListener('submit', (ev) => onSubmit(ev));
@@ -42,7 +43,7 @@ export function onSubmit (event, key = 'mycb') {
   event.preventDefault();
 
   const { elements } = event.target;
-  const { name, value, validity } = elements[key]; // comboboxElement;
+  const { name, value, validity } = elements[key];
 
   elements.output.value = `${name}: ${value}`;
   console.debug('Form submit:', name, value, validity, elements, event);

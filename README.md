@@ -49,7 +49,7 @@ form.addEventListener('submit', (event) => {
 });
 ```
 
-See [`index.html`][html] for a complete example, including shadow DOM:
+See [`index.html`][html] for an autocomplete example:
 ```html
 <form>
   <label for="mycb">Choose a country</label>
@@ -61,12 +61,12 @@ See [`index.html`][html] for a complete example, including shadow DOM:
 </form>
 ```
 
-See [`select.html`][select] for an example including shadow DOM:
+See [`select.html`][select] for a select-only example, including shadow DOM:
 ```html
 <form>
   <label for="mycb">Choose a mammal</label>
 
-  <my-combobox id="mycb" name="mammal">
+  <my-combobox id="mycb" name="mammal" type="button">
     <mytemplate shadowrootmode="open">
       ...
     </my-template>
